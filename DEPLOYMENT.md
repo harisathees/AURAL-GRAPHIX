@@ -66,7 +66,7 @@ half (mail credentials, forwarding rules) stays in that service's dashboard.
 
 ## 3. nginx configuration
 
-`/etc/nginx/sites-available/auralgraphix.com`:
+`/etc/nginx/sites-available/www.auralgraphix.com`:
 
 ```nginx
 # www -> apex. Canonical URLs in sitemap.xml/robots.txt use the apex domain,
@@ -158,7 +158,7 @@ server {
 Enable and reload:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/auralgraphix.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/www.auralgraphix.com /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
