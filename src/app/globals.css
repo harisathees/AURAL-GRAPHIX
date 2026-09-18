@@ -1,0 +1,299 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Aural Graphix — design tokens (mirrored from the source design system)
+   ============================================================ */
+@theme {
+  /* Neutrals */
+  --color-midnight: rgb(6 6 18);
+  --color-midnight-50: rgb(6 6 18 / 0.5);
+  --color-midnight-30: rgb(6 6 18 / 0.3);
+  --color-midnight-18: rgb(6 6 18 / 0.18);
+  --color-midnight-10: rgb(6 6 18 / 0.1);
+  --color-midnight-05: rgb(6 6 18 / 0.05);
+  --color-slate: rgb(77 76 76);
+  --color-charcoal: rgb(74 74 74);
+  --color-graphite: rgb(48 48 48);
+
+  /* Surfaces */
+  --color-mist: rgb(245 244 243);
+  --color-ivory: rgb(244 242 240);
+  --color-snow: rgb(250 249 248);
+  --color-pearl: rgb(238 236 234);
+  --color-linen: rgb(231 226 221);
+
+  /* Brand */
+  --color-brand: rgb(111 70 212);
+  --color-brand-deep: rgb(45 27 107);
+  --color-brand-soft: rgb(167 139 250);
+  --color-brand-tint: rgb(111 70 212 / 0.12);
+
+  /* Typography */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-script: var(--font-caveat), "Segoe Script", cursive;
+
+  /* Motion */
+  --ease-brand: cubic-bezier(0.44, 0, 0.56, 1);
+
+  /* Layout */
+  --breakpoint-tablet: 810px;
+  --breakpoint-desktop: 1200px;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-midnight-10);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-mist);
+    color: var(--color-midnight);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-brand);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, ::before, ::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ============================================================
+   Typography scale — exact values from the source text styles
+   (phone < 810px · tablet 810–1199px · desktop >= 1200px)
+   ============================================================ */
+@layer components {
+  .t-h1, .t-h2, .t-h2sm, .t-h3, .t-h3sm, .t-h4, .t-h4sm, .t-h5, .t-h6 {
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: var(--color-midnight);
+  }
+  .t-h1 { font-size: 40px; font-weight: 600; line-height: 1.1; }
+  .t-h2 { font-size: 36px; }
+  .t-h2sm { font-size: 26px; }
+  .t-h3 { font-size: 32px; }
+  .t-h3sm { font-size: 24px; }
+  .t-h4 { font-size: 28px; }
+  .t-h4sm { font-size: 22px; }
+  .t-h5 { font-size: 20px; }
+  .t-h6 { font-size: 20px; }
+
+  .t-body {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.0025em;
+    color: var(--color-slate);
+  }
+  .t-medium {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.0025em;
+    color: var(--color-slate);
+  }
+  .t-sm {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.0025em;
+    color: var(--color-slate);
+  }
+  .t-nav {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--color-midnight);
+  }
+  .t-pretitle {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-slate);
+  }
+  .t-script {
+    font-family: var(--font-script);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: var(--color-brand);
+  }
+
+  /* Tablet */
+  @media (min-width: 810px) {
+    .t-h1 { font-size: 56px; }
+    .t-h2 { font-size: 40px; }
+    .t-h2sm { font-size: 26px; }
+    .t-h3 { font-size: 36px; }
+    .t-h3sm { font-size: 26px; }
+    .t-h4 { font-size: 32px; }
+    .t-h4sm { font-size: 24px; }
+    .t-h5 { font-size: 22px; }
+    .t-body { font-size: 16px; }
+    .t-medium { font-size: 18px; }
+    .t-sm { font-size: 14px; }
+    .t-nav { font-size: 20px; }
+  }
+
+  /* Desktop */
+  @media (min-width: 1200px) {
+    .t-h1 { font-size: 70px; }
+    .t-h2 { font-size: 52px; }
+    .t-h2sm { font-size: 28px; }
+    .t-h3 { font-size: 42px; }
+    .t-h4 { font-size: 36px; }
+    .t-nav { font-size: 24px; }
+  }
+
+  /* Shared shells ------------------------------------------------ */
+  .section {
+    position: relative;
+    width: 100%;
+    padding-top: 90px;
+  }
+  @media (min-width: 810px) {
+    .section { padding-top: 120px; }
+  }
+  @media (min-width: 1200px) {
+    .section { padding-top: 160px; }
+  }
+
+  .container-x {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+  @media (min-width: 810px) {
+    .container-x { padding-inline: 30px; }
+  }
+
+  .card {
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 8px;
+  }
+
+  .shell {
+    background-color: var(--color-pearl);
+    border: 1px solid white;
+    border-radius: 16px;
+    padding: 12px;
+  }
+  @media (min-width: 810px) {
+    .shell { padding: 20px; }
+  }
+
+  /* Rich text --------------------------------------------------- */
+  .prose-aural h2 {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-top: 2em;
+    margin-bottom: 0.6em;
+    color: var(--color-midnight);
+  }
+  .prose-aural h2:first-child { margin-top: 0; }
+  .prose-aural p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--color-slate);
+    margin-bottom: 0.85em;
+  }
+  .prose-aural strong { color: var(--color-midnight); font-weight: 600; }
+  .prose-aural ul {
+    list-style: disc;
+    padding-left: 1.2em;
+    margin-bottom: 1.2em;
+  }
+  .prose-aural li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-slate);
+    margin-bottom: 0.3em;
+  }
+  @media (min-width: 1200px) {
+    .prose-aural h2 { font-size: 26px; }
+    .prose-aural p,
+    .prose-aural li { font-size: 16px; }
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@utility text-balance-tight {
+  text-wrap: balance;
+}
+
+/* Marquee / ticker ------------------------------------------- */
+@keyframes marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes marquee-y {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(0, -50%, 0); }
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes spin-slow-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.5; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.animate-marquee-x { animation: marquee-x var(--marquee-duration, 40s) linear infinite; }
+.animate-marquee-y { animation: marquee-y var(--marquee-duration, 20s) linear infinite; }
+.animate-marquee-x.is-reverse,
+.animate-marquee-y.is-reverse { animation-direction: reverse; }
+.marquee-host:hover .animate-marquee-x,
+.marquee-host:hover .animate-marquee-y { animation-play-state: paused; }
+
+.animate-spin-slow { animation: spin-slow 150s linear infinite; }
+.animate-spin-slow-reverse { animation: spin-slow-reverse 150s linear infinite; }
+.animate-pulse-ring { animation: pulse-ring 2s var(--ease-brand) infinite; }
