@@ -12,8 +12,9 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   // NOTE: next.config headers() is a no-op under `output: "export"` — there is no
-  // server to set them. The equivalents live in public/_headers (Netlify /
-  // Cloudflare Pages); mirror them in your host's config if you deploy elsewhere.
+  // Next server left to set them. Production serves via nginx, so the security
+  // headers live in the nginx server block; see DEPLOYMENT.md. public/_headers
+  // carries the same set for Netlify / Cloudflare Pages, which nginx ignores.
 };
 
 export default nextConfig;
