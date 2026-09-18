@@ -1,0 +1,9 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-DNS-Prefetch-Control: on
+
+# next/og exports this with no file extension; without an explicit type most
+# hosts serve it as octet-stream and social crawlers reject the preview.
+/opengraph-image
+  Content-Type: image/png

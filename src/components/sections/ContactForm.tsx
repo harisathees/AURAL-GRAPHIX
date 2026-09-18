@@ -3,7 +3,23 @@
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sending" | "sent" | "invalid" | "error";
+
+/**
+ * The site is a static export, so there is no server to post to. Submissions go
+ * straight to whichever form backend you point this at (Formspree, Getform,
+ * Basin, a Worker of your own). Must be inlined at build time, hence NEXT_PUBLIC_.
+ */
+const ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
+
+/** Mirrors the checks the old /api/contact route did, now client-side. */
+function validate(data: Record<string, string>) {
+  const errors: string[] = [];
+  if (data.name.trim().length < 2) errors.push("name");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email.trim())) errors.push("email");
+  if (data.phone.replace(/\D/g, "").length < 7) errors.push("phone");
+  return errors;
+}
 
 export function ContactForm() {
   const [status, setStatus] = useState<Status>("idle");
@@ -11,13 +27,26 @@ export function ContactForm() {
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+
+    if (validate(data).length) {
+      setStatus("invalid");
+      return;
+    }
+
+    if (!ENDPOINT) {
+      console.error("NEXT_PUBLIC_CONTACT_ENDPOINT is not set — nowhere to send this.");
+      setStatus("error");
+      return;
+    }
+
     setStatus("sending");
 
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() }),
       });
       if (!res.ok) throw new Error("Request failed");
       setStatus("sent");
@@ -57,6 +86,7 @@ export function ContactForm() {
 
         <p role="status" aria-live="polite" className="t-sm">
           {status === "sent" && "Thanks — we'll be in touch shortly."}
+          {status === "invalid" && "Please check your name, email and phone number."}
           {status === "error" && "Something went wrong. Please email us directly."}
         </p>
       </div>

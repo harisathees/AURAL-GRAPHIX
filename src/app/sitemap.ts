@@ -4,6 +4,9 @@ import { legalPages } from "@/data/legal";
 import { projects } from "@/data/projects";
 import { site } from "@/data/site";
 
+// Metadata routes are route handlers; `output: "export"` needs them pinned to build time.
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const url = (path: string) => new URL(path, site.url).toString();
