@@ -65,7 +65,7 @@ export const metadata: Metadata = {
     googleBot: { index: true, follow: true, "max-video-preview": -1, "max-image-preview": "large", "max-snippet": -1 },
   },
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    icon: [{ url: "/assets/aural graphix logo.png", type: "image/png" }],
     apple: [{ url: "/assets/logo-mark.webp" }],
   },
   formatDetection: { telephone: true, email: true, address: true },
