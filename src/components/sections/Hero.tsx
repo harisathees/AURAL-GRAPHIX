@@ -13,7 +13,7 @@ const clients = ["Nexter", "oslo.", "NOMME", "next"];
 
 export function Hero() {
   return (
-    <section className="relative isolate flex w-full items-center justify-center overflow-hidden px-5 pt-[180px] pb-24 sm:pt-[220px] lg:pt-[260px] lg:pb-40">
+    <section className="relative isolate flex w-full items-center justify-center overflow-hidden px-5 pt-[140px] pb-24 sm:pt-[180px] lg:pt-[220px] lg:pb-40">
       <HeroRings />
 
       <div className="relative z-2 flex w-full max-w-[640px] flex-col items-center gap-14 lg:gap-24">
@@ -38,7 +38,7 @@ export function Hero() {
 
           <div className="relative mt-2 flex flex-wrap items-center justify-center gap-4">
             <Reveal delay={0.65} onMount>
-              <Button href="/contact-us" variant="brand">
+              <Button href="/contact-us" variant="brand" className="border border-graphite">
                 Discuss your ideas
               </Button>
             </Reveal>
@@ -48,7 +48,8 @@ export function Hero() {
               </Button>
             </Reveal>
 
-            {/* Handwritten accent, positioned like the source design */}
+            {/* 
+            Handwritten accent, positioned like the source design
             <motion.div
               className="pointer-events-none absolute right-full top-1/2 hidden -translate-y-2 flex-col items-end gap-1 pr-4 lg:flex"
               initial={{ opacity: 0, y: 20 }}
@@ -64,10 +65,13 @@ export function Hero() {
               />
               <ScriptText text="Schedule a free call now" onMount delay={0.95} className="whitespace-nowrap" />
             </motion.div>
+            */}
           </div>
 
-          {/* Mobile accent */}
+          {/* 
+          Mobile accent
           <ScriptText text="Schedule a free call now" onMount delay={0.9} className="lg:hidden" />
+          */}
         </div>
 
         {/* Trust bar */}
@@ -103,31 +107,31 @@ export function Hero() {
  */
 function HeroRings() {
   const rings = [
-    { size: 1800, offset: -1400, ring: 10, delay: 0.25, spin: true },
-    { size: 1400, offset: -1150, ring: 8, delay: 0.13, spin: false },
-    { size: 1000, offset: -900, ring: 6, delay: 0.05, spin: false },
+    { size: 1800, visible: "clamp(40px, 30vw, 400px)", ring: 10, delay: 0.25, spin: true },
+    { size: 1400, visible: "clamp(0px, calc(24vw - 70px), 250px)", ring: 8, delay: 0.13, spin: false },
+    { size: 1000, visible: "clamp(10px, 8vw, 100px)", ring: 6, delay: 0.05, spin: false, hideOnMobile: true },
   ];
 
   return (
     <div className="pointer-events-none absolute inset-0 -z-1 overflow-hidden" aria-hidden>
       {(["left", "right"] as const).map((side) =>
-        rings.map(({ size, offset, ring, delay, spin }) => (
+        rings.map(({ size, visible, ring, delay, spin, hideOnMobile }) => (
           <motion.div
             key={`${side}-${size}`}
-            className="absolute top-1/2 rounded-full bg-pearl"
+            className={`absolute top-1/2 rounded-full bg-pearl ${hideOnMobile ? "hidden sm:block" : ""}`}
             style={{
               width: size,
               height: size,
               marginTop: -size / 2,
               padding: ring,
-              [side]: offset,
+              [side]: `calc(${visible} - ${size}px)`,
             }}
             initial={{ opacity: 0, x: side === "left" ? -50 : 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ ...springAppear, delay }}
           >
             <div className="size-full rounded-full border border-white bg-mist" />
-            {spin && <RingTrack reverse={side === "right"} seed={side === "left" ? 0 : 3} />}
+            {spin && <RingTrack reverse={side === "right"} seed={side === "left" ? 0 : 3} ring={ring} />}
           </motion.div>
         )),
       )}
@@ -136,17 +140,21 @@ function HeroRings() {
 }
 
 /** The 12 tool glyphs that orbit each outer ring over 150s. */
-function RingTrack({ reverse, seed }: { reverse: boolean; seed: number }) {
+function RingTrack({ reverse, seed, ring }: { reverse: boolean; seed: number; ring: number }) {
   return (
     <div className={`absolute inset-0 ${reverse ? "animate-spin-slow-reverse" : "animate-spin-slow"}`}>
       {Array.from({ length: 6 }).map((_, k) => (
         <div
           key={k}
-          className="absolute top-1/2 left-1/2 flex h-full w-[76px] flex-col justify-between"
+          className="absolute top-1/2 left-1/2 h-full w-[76px]"
           style={{ transform: `translate(-50%, -50%) rotate(${k * 30}deg)` }}
         >
-          <RingGlyph index={seed + k * 2} className="-rotate-90" />
-          <RingGlyph index={seed + k * 2 + 1} className="rotate-90" />
+          <div className="absolute left-0 w-full" style={{ top: ring / 2, transform: "translateY(-50%)" }}>
+            <RingGlyph index={seed + k * 2} className="-rotate-90" />
+          </div>
+          <div className="absolute left-0 w-full" style={{ bottom: ring / 2, transform: "translateY(50%)" }}>
+            <RingGlyph index={seed + k * 2 + 1} className="rotate-90" />
+          </div>
         </div>
       ))}
     </div>

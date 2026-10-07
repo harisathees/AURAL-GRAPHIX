@@ -38,15 +38,15 @@ export function Navigation() {
       >
         <nav
           aria-label="Main"
-          className="flex w-full max-w-[400px] min-w-0 items-stretch overflow-hidden rounded-xl border border-white bg-white/85 shadow-[0_10px_30px_-18px_rgb(6_6_18/0.35)] backdrop-blur-xl"
+          className="flex w-fit max-w-[400px] min-w-0 items-stretch justify-center overflow-hidden rounded-xl border border-white bg-white/85 shadow-[0_10px_30px_-18px_rgb(6_6_18/0.35)] backdrop-blur-xl"
         >
           <Link
             href="/"
-            className="flex min-w-0 flex-1 items-center gap-1.5 px-3 py-2.5 transition-opacity hover:opacity-70 sm:gap-2 sm:px-4 sm:py-3"
+            className="flex min-w-0 items-center gap-1.5 px-3 py-2.5 transition-opacity hover:opacity-70 sm:gap-2 sm:px-4 sm:py-3"
             aria-label={`${site.name} — home`}
           >
             <Image
-              src="/assets/logo-mark.webp"
+              src="/assets/aural graphix logo.png"
               alt=""
               width={28}
               height={28}
@@ -69,7 +69,7 @@ export function Navigation() {
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label={open ? "Close menu" : "Open menu"}
-            className="grid w-11 shrink-0 place-items-center border-x border-midnight-10 transition-colors hover:bg-mist sm:w-14"
+            className="grid w-11 shrink-0 place-items-center border-l sm:border-x border-midnight-10 transition-colors hover:bg-mist sm:w-14"
           >
             <span className="relative block h-3 w-5">
               <motion.span
@@ -85,7 +85,7 @@ export function Navigation() {
             </span>
           </button>
 
-          <div className="flex shrink-0 items-center px-2 sm:px-3">
+          <div className="hidden sm:flex shrink-0 items-center px-2 sm:px-3">
             <Button
               href="/contact-us"
               variant="dark"
@@ -119,7 +119,7 @@ export function Navigation() {
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ type: "spring", duration: 0.45, bounce: 0.12 }}
             >
-              <ul className="flex flex-col p-2">
+              <ul className="flex flex-col px-5 pt-2">
                 {nav.map((item, i) => {
                   const active = pathname === item.href;
                   return (
@@ -128,26 +128,23 @@ export function Navigation() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.05 + i * 0.045, duration: 0.3 }}
+                      className="border-b border-dashed border-midnight-10"
                     >
                       <Link
                         href={item.href}
                         aria-current={active ? "page" : undefined}
-                        className={`t-nav flex items-center justify-between rounded-lg px-4 py-2.5 transition-colors sm:py-3 ${
-                          active ? "bg-mist text-brand" : "text-midnight hover:bg-mist"
+                        className={`t-nav flex w-full items-center py-4 transition-colors ${
+                          active ? "text-slate" : "text-midnight hover:text-brand"
                         }`}
                       >
                         {item.label}
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden className="opacity-30">
-                          <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
                       </Link>
                     </motion.li>
                   );
                 })}
               </ul>
 
-              <div className="flex items-center justify-between gap-4 border-t border-midnight-10 px-5 py-4">
-                <p className="t-sm">© {new Date().getFullYear()} {site.name}</p>
+              <div className="flex items-center justify-between gap-4 px-5 py-4">
                 <ul className="flex items-center gap-1.5">
                   {site.socials.map((s) => {
                     const Icon = socialIcons[s.icon];
@@ -158,7 +155,7 @@ export function Navigation() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={s.name}
-                          className="grid size-8 place-items-center rounded-md border border-midnight-10 text-midnight transition-colors hover:bg-midnight hover:text-white"
+                          className="grid size-8 place-items-center rounded-lg bg-mist text-midnight transition-colors hover:bg-midnight hover:text-white"
                         >
                           <Icon className="size-4" />
                         </a>
@@ -166,6 +163,7 @@ export function Navigation() {
                     );
                   })}
                 </ul>
+                <p className="t-sm text-slate">© {new Date().getFullYear()} {site.name}</p>
               </div>
             </motion.div>
           </>

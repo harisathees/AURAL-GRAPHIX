@@ -50,7 +50,7 @@ export function Gallery() {
       <div className="pointer-events-none absolute inset-x-[-1%] bottom-0 z-3 h-5 border-t border-white bg-pearl" aria-hidden />
 
       {/* Centre blob */}
-      <motion.div
+      {/* <motion.div
         className="absolute top-1/2 left-1/2 z-3 grid size-[260px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-gradient-to-b from-white to-linen p-2.5 shadow-[0_30px_70px_-30px_rgb(6_6_18/0.4)] sm:size-[320px] lg:size-[380px]"
         initial={{ opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -68,7 +68,7 @@ export function Gallery() {
             </Button>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
     </section>
   );
 }

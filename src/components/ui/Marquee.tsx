@@ -28,24 +28,25 @@ export function Marquee({
 }: MarqueeProps) {
   const axis = direction === "x" ? "animate-marquee-x" : "animate-marquee-y";
   const flow = direction === "x" ? "flex-row" : "flex-col";
+  const trackSize = direction === "x" ? "h-full w-max" : "w-full h-max";
+  const childSize = direction === "x" ? "h-full" : "w-full";
 
   return (
     <div className={`marquee-host relative overflow-hidden ${className}`}>
       <div
-        className={`flex h-full w-max ${flow} ${axis} ${reverse ? "is-reverse" : ""}`}
+        className={`flex ${trackSize} ${flow} ${axis} ${reverse ? "is-reverse" : ""}`}
         style={
           {
             gap: `${gap}px`,
             "--marquee-duration": `${duration}s`,
-            ...(direction === "y" ? { width: "100%" } : {}),
           } as React.CSSProperties
         }
         aria-hidden={false}
       >
-        <div className={`flex h-full shrink-0 ${flow} ${itemClassName}`} style={{ gap: `${gap}px` }}>
+        <div className={`flex shrink-0 ${childSize} ${flow} ${itemClassName}`} style={{ gap: `${gap}px` }}>
           {children}
         </div>
-        <div className={`flex h-full shrink-0 ${flow} ${itemClassName}`} style={{ gap: `${gap}px` }} aria-hidden>
+        <div className={`flex shrink-0 ${childSize} ${flow} ${itemClassName}`} style={{ gap: `${gap}px` }} aria-hidden>
           {children}
         </div>
       </div>

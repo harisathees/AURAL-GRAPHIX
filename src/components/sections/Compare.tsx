@@ -6,12 +6,14 @@ import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { StarIcon } from "@/components/ui/Icons";
 import { comparison } from "@/data/content";
-import { charReveal, inView, stagger } from "@/lib/motion";
+import { inView } from "@/lib/motion";
 
 const avatars = [
-  "/assets/team/praveen-gunal.webp",
-  "/assets/team/bala-vasanth.webp",
-  "/assets/team/hari.webp",
+  "/assets/brands/waffles.png",
+  "/assets/brands/kabitas.png",
+  "/assets/brands/pawbiotic.jpg",
+  "/assets/brands/aquamak.jpg",
+  
 ];
 
 export function Compare() {
@@ -20,11 +22,19 @@ export function Compare() {
       <div className="container-x mx-auto max-w-[700px]">
         <div className="flex flex-col gap-10 lg:gap-[60px]">
           <div className="flex flex-col gap-6">
-            <Reveal as="h2" className="t-h4 text-balance-tight">
-              The right <span className="text-brand">creative partner</span> changes more than the design.
+            <Reveal as="h2" className="t-h3 text-balance-tight">
+              See why <span className="text-brand">visionary brands</span>{" "}
+              <span className="inline-flex h-[1.1em] w-[2em] -translate-y-0.5 items-center rounded-full bg-brand-deep px-[0.15em] align-middle mx-1 shadow-inner" aria-hidden>
+                <motion.span
+                  className="block aspect-square h-[80%] rounded-full bg-white shadow-sm"
+                  initial={{ x: 0 }}
+                  whileInView={{ x: "90%" }}
+                  viewport={inView}
+                  transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.5 }}
+                />
+              </span>{" "}
+              from traditional agencies to Aural Graphix.
             </Reveal>
-
-            <WordReveal />
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-0">
@@ -92,50 +102,7 @@ export function Compare() {
   );
 }
 
-/** "So we made it simple to compare how we work ⬤ versus what you usually get in the market." */
-function WordReveal() {
-  const parts: Array<{ text: string; accent?: boolean; toggle?: boolean }> = [
-    { text: "So" }, { text: "we" }, { text: "made" }, { text: "it" },
-    { text: "simple" }, { text: "to" }, { text: "compare", accent: true },
-    { text: "how" }, { text: "we" }, { text: "work" }, { text: "", toggle: true },
-    { text: "versus" }, { text: "what" }, { text: "you" }, { text: "usually" },
-    { text: "get" }, { text: "in", accent: true }, { text: "the", accent: true },
-    { text: "market.", accent: true },
-  ];
 
-  return (
-    <motion.h3
-      className="t-h4 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-balance-tight"
-      variants={stagger(0.035, 0.1)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={inView}
-    >
-      {parts.map((p, i) =>
-        p.toggle ? (
-          <motion.span
-            key={`toggle-${i}`}
-            variants={charReveal}
-            className="inline-flex h-7 w-[52px] items-center rounded-full bg-brand-deep px-1"
-            aria-hidden
-          >
-            <motion.span
-              className="block size-5 rounded-full bg-white"
-              initial={{ x: 0 }}
-              whileInView={{ x: 24 }}
-              viewport={inView}
-              transition={{ type: "spring", stiffness: 260, damping: 26, delay: 0.9 }}
-            />
-          </motion.span>
-        ) : (
-          <motion.span key={`${p.text}-${i}`} variants={charReveal} className={p.accent ? "text-brand" : undefined}>
-            {p.text}
-          </motion.span>
-        ),
-      )}
-    </motion.h3>
-  );
-}
 
 function ColumnHeader({ children }: { children: string }) {
   return <h3 className="t-h4sm px-5 py-5 lg:px-6">{children}</h3>;

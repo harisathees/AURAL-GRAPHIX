@@ -44,8 +44,6 @@ export function AboutBento() {
 /* ------------------------------------------------------------------ */
 
 function CsatCard() {
-  const [active, setActive] = useState(4);
-
   return (
     <article className="card flex flex-col items-center justify-between gap-10 p-5 text-center">
       <div className="flex flex-col gap-1.5">
@@ -54,23 +52,17 @@ function CsatCard() {
       </div>
 
       <div className="flex flex-col items-center gap-3">
-        <p className="t-pretitle">{emojiScores[active].label}</p>
+        <p className="t-pretitle">{emojiScores[4].label}</p>
         <div className="flex items-center gap-2.5">
           {emojiScores.map((score, i) => (
-            <button
+            <div
               key={score.label}
-              type="button"
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
-              onClick={() => setActive(i)}
-              aria-label={score.label}
-              aria-pressed={i === active}
               className={`relative grid size-[26px] place-items-center rounded-full transition-transform duration-300 ${
-                i === active ? "scale-125 ring-2 ring-brand ring-offset-2 ring-offset-white" : "opacity-60 hover:opacity-100"
+                i === 4 ? "scale-125 ring-2 ring-brand ring-offset-2 ring-offset-white" : "opacity-60"
               }`}
             >
-              <Image src={score.icon} alt="" width={26} height={26} className="size-full rounded-full" />
-            </button>
+              <Image src={score.icon} alt={score.label} width={26} height={26} className="size-full rounded-full" />
+            </div>
           ))}
         </div>
       </div>
