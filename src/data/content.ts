@@ -16,16 +16,23 @@ export const services = [
     icon: "design",
   },
   {
+    title: "Product Development",
+    description:
+      "From discovery and rapid prototyping to full-stack engineering, we build scalable digital products tailored to solve real problems and grow with your users.",
+    tags: ["MVP", "SaaS", "Mobile & Web"],
+    icon: "product",
+  },
+  {
     title: "Web Development",
     description:
-      "We build fast, scalable, and fully responsive websites that perform beautifully — whether it's a simple portfolio or a full digital platform",
+      "We build fast, scalable, and fully responsive websites that perform beautifully — whether it's a simple portfolio or a full digital platform.",
     tags: ["Front - end", "Back - end", "CRM"],
     icon: "code",
   },
   {
     title: "Digital Marketing",
     description:
-      "We build fast, scalable, and fully responsive websites that perform beautifully — whether it's a simple portfolio or a full digital platform",
+      "Data-driven marketing and SEO campaigns designed to expand your reach, acquire loyal customers, and drive measurable revenue growth.",
     tags: ["SEO", "SMM", "SEM"],
     icon: "marketing",
   },
@@ -166,7 +173,7 @@ export const whyChooseUs = [
 ] as const;
 
 export const industries = [
-  "Camera Shooting",
+  "Product Development",
   "SEO/SMM/AEO",
   "Web Development",
   "Branding",
