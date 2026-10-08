@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { PreTitle } from "@/components/ui/PreTitle";
@@ -17,6 +16,10 @@ const avatars = [
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
+
+  const toggleFaq = (index: number) => {
+    setOpen((prev) => (prev === index ? null : index));
+  };
 
   return (
     <section id="faqs" className="section overflow-hidden pb-24 lg:pb-40">
@@ -46,51 +49,59 @@ export function Faq() {
             {faqs.map((faq, i) => {
               const isOpen = open === i;
               return (
-                <div key={faq.question} className="overflow-hidden rounded-lg bg-white">
+                <div key={faq.question} className="overflow-hidden rounded-lg bg-white shadow-xs">
                   <h3>
                     <button
                       type="button"
-                      onClick={() => setOpen(isOpen ? null : i)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleFaq(i);
+                      }}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
                       id={`faq-trigger-${i}`}
-                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:bg-mist/60"
+                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:bg-mist/60 cursor-pointer"
                     >
                       <span className="text-[15px] font-medium tracking-[-0.02em] text-midnight lg:text-[17px]">
                         {i + 1}. {faq.question}
                       </span>
                       <span className="grid size-6 shrink-0 place-items-center rounded-full bg-midnight text-white">
-                        <motion.svg
+                        <svg
                           width="12"
                           height="12"
                           viewBox="0 0 24 24"
                           fill="none"
-                          aria-hidden
-                          animate={{ rotate: isOpen ? 135 : 0 }}
-                          transition={{ duration: 0.3, ease: [0.44, 0, 0.56, 1] }}
+                          aria-hidden="true"
+                          className={`transition-transform duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] ${
+                            isOpen ? "rotate-45" : "rotate-0"
+                          }`}
                         >
-                          <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-                        </motion.svg>
+                          <path
+                            d="M12 5v14M5 12h14"
+                            stroke="currentColor"
+                            strokeWidth="2.4"
+                            strokeLinecap="round"
+                          />
+                        </svg>
                       </span>
                     </button>
                   </h3>
 
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        id={`faq-panel-${i}`}
-                        role="region"
-                        aria-labelledby={`faq-trigger-${i}`}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.35, ease: [0.44, 0, 0.56, 1] }}
-                        className="overflow-hidden"
-                      >
-                        <p className="t-body border-t border-dashed border-midnight-10 px-5 py-5">{faq.answer}</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                  <div
+                    id={`faq-panel-${i}`}
+                    role="region"
+                    aria-labelledby={`faq-trigger-${i}`}
+                    className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.44,0,0.56,1)] ${
+                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <p className="t-body border-t border-dashed border-midnight-10 px-5 py-5">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               );
             })}
