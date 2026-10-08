@@ -43,7 +43,6 @@ export function FeaturedProjects() {
               label="Featured projects"
               interval={0}
               gap={20}
-              showArrows={true}
               showSideArrows={true}
               slides={featured.map((p, i) => (
                 <ProjectCard key={p.slug} project={p} layout="split" priority={i === 0} />
@@ -59,7 +58,6 @@ export function FeaturedProjects() {
               label="Featured projects"
               interval={0}
               gap={16}
-              showArrows={true}
               showSideArrows={true}
               slides={featured.map((p, i) => (
                 <ProjectCard key={p.slug} project={p} layout="stacked" priority={i === 0} />

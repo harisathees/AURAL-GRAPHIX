@@ -158,58 +158,21 @@ export function Carousel({
         </motion.div>
       </div>
 
-      {/* Bottom Controls Bar */}
-      {pages > 1 && (showArrows || showDots) && (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-2">
-          {showArrows && (
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => go(index - 1)}
-                aria-label="Previous project card"
-                className="inline-flex items-center gap-2 rounded-full border border-midnight-10 bg-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium text-midnight shadow-sm transition-all hover:bg-mist hover:border-midnight-18 active:scale-95 cursor-pointer"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="stroke-current">
-                  <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span>Previous Project</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => go(index + 1)}
-                aria-label="Next project card"
-                className="inline-flex items-center gap-2 rounded-full border border-midnight-10 bg-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium text-midnight shadow-sm transition-all hover:bg-mist hover:border-midnight-18 active:scale-95 cursor-pointer"
-              >
-                <span>Next Project</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="stroke-current">
-                  <path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-            </div>
-          )}
-
-          <div className="flex items-center gap-3 ml-auto">
-            <span className="text-xs font-medium text-midnight-50 tabular-nums">
-              Project {index + 1} of {pages}
-            </span>
-            {showDots && (
-              <div className="flex items-center gap-1.5">
-                {Array.from({ length: pages }).map((_, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => go(i)}
-                    aria-label={`Go to project ${i + 1}`}
-                    aria-current={i === index}
-                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      i === index ? "w-6 bg-midnight" : "w-2.5 bg-midnight-18 hover:bg-midnight-30"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+      {/* Dots indicator */}
+      {showDots && pages > 1 && (
+        <div className="mt-6 flex items-center justify-center gap-2.5">
+          {Array.from({ length: pages }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => go(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index}
+              className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                i === index ? "w-6 bg-midnight" : "w-2.5 bg-midnight-18 hover:bg-midnight-30"
+              }`}
+            />
+          ))}
         </div>
       )}
 
