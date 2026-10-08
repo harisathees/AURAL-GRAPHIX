@@ -108,42 +108,42 @@ export const testimonials = [
   {
     quote:
       "Working with this team was effortless that they understood our brand vision & turned it into a digital experience that truly represents who we are.",
-    name: "Olivia Carter",
+    name: "Mithran",
     role: "Brand Director",
     rating: 5,
   },
   {
     quote:
       "They translated our ideas into a clean, modern digital presence that feels exactly right for our brand.",
-    name: "Ethan Miller",
+    name: "Iniya",
     role: "Director",
     rating: 5,
   },
   {
     quote:
       "Aural Graphix transformed Aqua Mak into a brand that feels clean, premium, and professional. Every detail feels connected and thoughtfully designed.",
-    name: "Ayyanan",
+    name: "Arun",
     role: "Director, AA Minerals",
     rating: 5,
   },
   {
     quote:
       "Aural Graphix gave Pawbiotics a distinctive identity that feels warm, modern, and instantly recognisable. The logo and mascot came together beautifully.",
-    name: "Sarah Thomas",
+    name: "Pranav",
     role: "Manager",
     rating: 5,
   },
   {
     quote:
       "Aural Graphix brought our vision to life with remarkable clarity and attention to detail. The final identity feels refined and truly representative of our brand.",
-    name: "Harper Collins",
+    name: "Yazhini",
     role: "Restaurant Owner",
     rating: 5,
   },
   {
     quote:
       "Aural Graphix gave Chill Cafe a fresh identity that feels modern, memorable, and unmistakably ours. Every detail came together beautifully.",
-    name: "Mason Clark",
+    name: "Dhinesh",
     role: "Chief Officer",
     rating: 5,
   },

@@ -51,7 +51,7 @@ export default function AboutPage() {
 
             <div className="relative min-h-[280px] overflow-hidden rounded-lg bg-mist lg:min-h-[340px]">
               <Image
-                src="/assets/team/praveen-gunal.webp"
+                src="/assets/team/teams_img.png"
                 alt="The Aural Graphix team"
                 fill
                 priority
