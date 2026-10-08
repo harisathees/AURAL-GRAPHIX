@@ -11,13 +11,14 @@ interface CarouselProps {
   gap?: number;
   showDots?: boolean;
   showArrows?: boolean;
+  showSideArrows?: boolean;
   label: string;
   className?: string;
 }
 
 /**
  * Replaces the source Slideshow component: autoplay, drag, dots and arrow
- * controls with the same spring feel.
+ * controls with the same spring feel. Supports both side and bottom navigation controls.
  */
 export function Carousel({
   slides,
@@ -26,6 +27,7 @@ export function Carousel({
   gap = 20,
   showDots = true,
   showArrows = false,
+  showSideArrows = false,
   label,
   className = "",
 }: CarouselProps) {
@@ -78,6 +80,56 @@ export function Carousel({
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
+      {/* Side Navigation Buttons */}
+      {showSideArrows && pages > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              go(index - 1);
+            }}
+            aria-label="Previous project card"
+            title="Previous project"
+            className="absolute left-1 sm:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-30 grid size-10 sm:size-12 lg:size-13 place-items-center rounded-full bg-white text-midnight shadow-[0_10px_25px_-5px_rgba(6,6,18,0.22)] border border-midnight-10 hover:bg-mist hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              className="stroke-current"
+            >
+              <path d="M15 18l-6-6 6-6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              go(index + 1);
+            }}
+            aria-label="Next project card"
+            title="Next project"
+            className="absolute right-1 sm:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-30 grid size-10 sm:size-12 lg:size-13 place-items-center rounded-full bg-white text-midnight shadow-[0_10px_25px_-5px_rgba(6,6,18,0.22)] border border-midnight-10 hover:bg-mist hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+              className="stroke-current"
+            >
+              <path d="M9 18l6-6-6-6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </>
+      )}
+
+      {/* Slide track */}
       <div className="overflow-hidden">
         <motion.div
           ref={trackRef}
@@ -106,54 +158,62 @@ export function Carousel({
         </motion.div>
       </div>
 
-      {showArrows && pages > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-3">
-          <Arrow label="Previous slide" onClick={() => go(index - 1)} direction="left" />
-          <Arrow label="Next slide" onClick={() => go(index + 1)} direction="right" />
-        </div>
-      )}
+      {/* Bottom Controls Bar */}
+      {pages > 1 && (showArrows || showDots) && (
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 pt-2">
+          {showArrows && (
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => go(index - 1)}
+                aria-label="Previous project card"
+                className="inline-flex items-center gap-2 rounded-full border border-midnight-10 bg-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium text-midnight shadow-sm transition-all hover:bg-mist hover:border-midnight-18 active:scale-95 cursor-pointer"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="stroke-current">
+                  <path d="M15 18l-6-6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <span>Previous Project</span>
+              </button>
 
-      {showDots && pages > 1 && (
-        <div className="mt-6 flex items-center justify-center gap-2.5">
-          {Array.from({ length: pages }).map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => go(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              aria-current={i === index}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                i === index ? "w-2.5 bg-midnight" : "w-2.5 bg-midnight-18 hover:bg-midnight-30"
-              }`}
-            />
-          ))}
+              <button
+                type="button"
+                onClick={() => go(index + 1)}
+                aria-label="Next project card"
+                className="inline-flex items-center gap-2 rounded-full border border-midnight-10 bg-white px-3.5 sm:px-4 py-2 text-xs sm:text-sm font-medium text-midnight shadow-sm transition-all hover:bg-mist hover:border-midnight-18 active:scale-95 cursor-pointer"
+              >
+                <span>Next Project</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="stroke-current">
+                  <path d="M9 18l6-6-6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </div>
+          )}
+
+          <div className="flex items-center gap-3 ml-auto">
+            <span className="text-xs font-medium text-midnight-50 tabular-nums">
+              Project {index + 1} of {pages}
+            </span>
+            {showDots && (
+              <div className="flex items-center gap-1.5">
+                {Array.from({ length: pages }).map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => go(i)}
+                    aria-label={`Go to project ${i + 1}`}
+                    aria-current={i === index}
+                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      i === index ? "w-6 bg-midnight" : "w-2.5 bg-midnight-18 hover:bg-midnight-30"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
       <AnimatePresence>{null}</AnimatePresence>
     </div>
-  );
-}
-
-function Arrow({
-  label,
-  onClick,
-  direction,
-}: {
-  label: string;
-  onClick: () => void;
-  direction: "left" | "right";
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className="grid size-10 place-items-center rounded-lg border border-midnight-10 bg-white text-midnight shadow-[0_6px_16px_-12px_rgb(6_6_18/0.4)] transition-colors hover:bg-mist"
-    >
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden className={direction === "left" ? "rotate-180" : ""}>
-        <path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </button>
   );
 }
