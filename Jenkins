@@ -1,0 +1,62 @@
+pipeline {
+    agent any
+
+    environment {
+        COMPOSER_ALLOW_SUPERUSER = '1'
+        PROJECT_PATH = '/var/www/AURAL-GRAPHIX'
+    }
+
+    options {
+        timestamps()
+    }
+
+    stages {
+
+        stage('Pull Latest Code') {
+            steps {
+                dir("${PROJECT_PATH}") {
+                    sh '''
+                        set -eux
+
+                        git checkout main
+                        git fetch origin
+                        git reset --hard origin/main
+                        git clean -fd
+                    '''
+                }
+            }
+        }
+
+        stage('Frontend - Build') {
+            steps {
+             {
+                    sh '''
+                        set -eux
+
+                        rm -rf node_modules
+                        rm -rf dist
+
+                        npm ci
+
+                        npm run build
+                    '''
+                }
+            }
+        }
+
+    }
+
+    post {
+        always {
+            echo 'Pipeline execution completed.'
+        }
+
+        success {
+            echo 'Deployment completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
