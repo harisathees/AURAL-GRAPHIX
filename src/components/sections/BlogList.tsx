@@ -16,8 +16,8 @@ export function BlogList({ posts }: { posts: readonly BlogPost[] }) {
 
   return (
     <div className="flex flex-col items-center gap-8">
-      <div className="grid w-full gap-5 lg:grid-cols-3">
-        <Reveal delay={0.15} className="lg:col-span-2">
+      <div className="grid w-full gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal delay={0.15} className="sm:col-span-2 lg:col-span-2">
           <BlogCard post={feature} layout="split" priority />
         </Reveal>
 

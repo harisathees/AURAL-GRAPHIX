@@ -13,11 +13,11 @@ export function CtaBanner() {
     <section className="section pt-16 lg:pt-24">
       <div className="container-x mx-auto max-w-[1060px]">
         <Reveal className="shell">
-          <div className="relative isolate overflow-hidden rounded-xl bg-gradient-to-r from-[rgb(238_233_250)] via-[rgb(198_175_244)] to-[rgb(134_82_231)] px-6 py-10 lg:px-12 lg:py-14">
+          <div className="relative isolate overflow-hidden rounded-xl bg-gradient-to-r from-[rgb(238_233_250)] via-[rgb(198_175_244)] to-[rgb(134_82_231)] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-14">
             <Rings />
 
-            <div className="relative z-2 grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
-              <div className="flex flex-col items-start gap-5">
+            <div className="relative z-2 grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
+              <div className="flex flex-col items-start gap-4 sm:gap-5">
                 <p className="t-pretitle text-midnight/70">Let&rsquo;s build something great</p>
                 <h2 className="t-h2 max-w-[16ch] text-balance-tight">Ready to start your next project?</h2>
                 <Button href="/contact-us" variant="dark">
@@ -25,7 +25,41 @@ export function CtaBanner() {
                 </Button>
               </div>
 
-              <div className="w-full rounded-xl border border-white/70 bg-white/95 p-5 shadow-[0_24px_60px_-30px_rgb(6_6_18/0.5)] backdrop-blur-sm lg:p-6">
+              <div className="relative w-full rounded-xl border border-white/70 bg-white p-4 sm:p-5 shadow-[0_24px_60px_-30px_rgb(6_6_18/0.5)] backdrop-blur-sm lg:p-6">
+                {/* Always-visible Floating AURIX Cursor Badge in the middle of the card's white space */}
+                <motion.div
+                  className="pointer-events-none absolute top-[38%] right-6 sm:right-10 z-20 flex flex-col items-start"
+                  animate={{
+                    y: [0, -6, 0],
+                    x: [0, 3, 0],
+                    rotate: [0, 1.5, 0],
+                  }}
+                  transition={{
+                    duration: 3.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {/* Cursor Arrow Pointer */}
+                  <svg
+                    width="22"
+                    height="24"
+                    viewBox="0 0 18 20"
+                    fill="none"
+                    aria-hidden="true"
+                    className="text-midnight drop-shadow-sm"
+                  >
+                    <path
+                      d="M1.5 1.5L16 9.5L8.5 11.5L5.5 18.5L1.5 1.5Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                  {/* AURIX Pill Badge */}
+                  <div className="ml-3.5 -mt-1 rounded-full bg-midnight px-3.5 py-1 text-[13px] sm:text-[14px] font-bold tracking-wider text-white shadow-md border border-white/20 uppercase">
+                    AURIX
+                  </div>
+                </motion.div>
+
                 <p className="t-pretitle flex items-center gap-2.5">
                   <span className="relative grid size-2 place-items-center">
                     <span className="absolute size-2 rounded-full bg-midnight animate-pulse-ring" aria-hidden />
@@ -64,20 +98,39 @@ export function CtaBanner() {
 function Rings() {
   return (
     <div className="pointer-events-none absolute inset-0 z-1 overflow-hidden" aria-hidden>
-      {[
-        { size: 420, top: "-55%", left: "34%" },
-        { size: 560, top: "45%", left: "22%" },
-      ].map(({ size, top, left }, i) => (
-        <motion.span
-          key={i}
-          className="absolute rounded-full border-2 border-brand-deep/45"
-          style={{ width: size, height: size, top, left }}
-          initial={{ opacity: 0, scale: 0.92 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+      <svg
+        className="size-full"
+        viewBox="0 0 1000 385"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        {/* Upper arc: dipping into upper-center of the banner */}
+        <motion.circle
+          cx="490"
+          cy="-110"
+          r="188"
+          stroke="#2e146d"
+          strokeWidth="6.5"
+          vectorEffect="non-scaling-stroke"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
           viewport={inView}
-          transition={{ duration: 0.8, delay: 0.15 * i, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         />
-      ))}
+
+        {/* Lower arc: starting from bottom edge, passing behind the card to the bottom right */}
+        <motion.path
+          d="M 505 385 A 270 240 0 0 1 995 385"
+          stroke="#2e146d"
+          strokeWidth="7.5"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={inView}
+          transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </svg>
     </div>
   );
 }

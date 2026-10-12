@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { CircularProgress } from "@/components/ui/CircularProgress";
@@ -144,11 +144,16 @@ function DiscussCard() {
         <h2 className="t-h5">Discuss your project</h2>
       </div>
 
-      <div className="relative z-2 flex flex-col items-center gap-3 py-6">
-        <Button href={site.bookingUrl} variant="brand" newTab>
+      <div className="relative z-2 flex flex-col items-center gap-3 py-5 sm:py-6">
+        <Button
+          href={site.bookingUrl}
+          variant="brand"
+          newTab
+          className="max-w-full text-[13px] sm:text-[15px] px-3.5 sm:px-5"
+        >
           Schedule a call - 15 mins free
         </Button>
-        <p className="t-body">No pressure, just a thoughtful chat.</p>
+        <p className="t-body text-[14px] sm:text-[15px]">No pressure, just a thoughtful chat.</p>
       </div>
 
       <div className="relative z-2 flex h-20 w-full items-start justify-center">
@@ -160,7 +165,7 @@ function DiscussCard() {
           ].map(({ src, rot }, i) => (
             <motion.span
               key={src}
-              className="relative -ml-5 block h-[86px] w-[74px] overflow-hidden rounded-md border-4 border-white bg-white shadow-[0_10px_24px_-14px_rgb(6_6_18/0.5)] first:ml-0"
+              className="relative -ml-4 sm:-ml-5 block h-[76px] w-[64px] sm:h-[86px] sm:w-[74px] overflow-hidden rounded-md border-4 border-white bg-white shadow-[0_10px_24px_-14px_rgb(6_6_18/0.5)] first:ml-0"
               style={{ zIndex: i === 1 ? 3 : 1 }}
               initial={{ opacity: 0, y: 24, rotate: 0 }}
               whileInView={{ opacity: 1, y: 0, rotate: rot }}
@@ -177,24 +182,34 @@ function DiscussCard() {
 }
 
 function MetricsCard() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const check = () => setIsMobile(mq.matches);
+    check();
+    mq.addEventListener("change", check);
+    return () => mq.removeEventListener("change", check);
+  }, []);
+
   const metrics = [
-    { value: 99, label: "Performance", size: 76, font: 16 },
-    { value: 100, label: "Branding", size: 106, font: 21 },
-    { value: 98, label: "Accessibility", size: 76, font: 16 },
+    { value: 99, label: "Performance", size: isMobile ? 62 : 76, font: isMobile ? 14 : 16 },
+    { value: 100, label: "Branding", size: isMobile ? 86 : 106, font: isMobile ? 18 : 21 },
+    { value: 98, label: "Accessibility", size: isMobile ? 62 : 76, font: isMobile ? 14 : 16 },
   ];
 
   return (
-    <article className="card flex flex-col justify-between gap-12 p-5">
+    <article className="card flex flex-col justify-between gap-8 sm:gap-12 p-4 sm:p-5">
       <div className="flex flex-col items-center gap-1.5 text-center">
         <h2 className="t-h5">Where ideas find their form</h2>
-        <p className="t-body">Turning brand stories into visuals people remember.</p>
+        <p className="t-body text-[14px] sm:text-[15px]">Turning brand stories into visuals people remember.</p>
       </div>
 
-      <div className="flex items-end justify-center gap-7">
+      <div className="flex items-end justify-center gap-3 sm:gap-7">
         {metrics.map((m, i) => (
-          <div key={m.label} className="flex flex-col items-center gap-2.5">
+          <div key={m.label} className="flex flex-col items-center gap-2">
             <CircularProgress percentage={m.value} size={m.size} fontSize={m.font} delay={0.4 + i * 0.1} />
-            <p className="t-pretitle">{m.label}</p>
+            <p className="t-pretitle text-[10px] sm:text-[12px]">{m.label}</p>
           </div>
         ))}
       </div>

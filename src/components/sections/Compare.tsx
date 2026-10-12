@@ -19,8 +19,8 @@ const avatars = [
 export function Compare() {
   return (
     <section className="section">
-      <div className="container-x mx-auto max-w-[700px]">
-        <div className="flex flex-col gap-10 lg:gap-[60px]">
+      <div className="container-x mx-auto max-w-[800px]">
+        <div className="flex flex-col gap-8 sm:gap-10 lg:gap-[60px]">
           <div className="flex flex-col gap-6">
             <Reveal as="h2" className="t-h3 text-balance-tight">
               See why <span className="text-brand">visionary brands</span>{" "}
@@ -38,7 +38,7 @@ export function Compare() {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 sm:gap-0">
-            <Reveal delay={0.1} className="overflow-hidden rounded-2xl bg-white sm:rounded-r-none">
+            <Reveal delay={0.1} className="overflow-hidden rounded-2xl bg-white sm:rounded-r-none border sm:border-r-0 border-midnight-10 sm:border-transparent">
               <ColumnHeader>{comparison.others.label}</ColumnHeader>
               <ul>
                 {comparison.others.items.map((item) => (
@@ -62,38 +62,40 @@ export function Compare() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.25} className="flex flex-wrap items-center gap-5">
-            <Button href="/about-us" variant="brand">
+          <Reveal delay={0.25} className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-4 sm:gap-5">
+            <Button href="/about-us" variant="brand" className="w-full sm:w-fit">
               Read our story
             </Button>
 
-            <div className="flex items-center">
-              {avatars.map((src, i) => (
-                <span
-                  key={src}
-                  className="relative -ml-2.5 size-9 overflow-hidden rounded-full border-2 border-white first:ml-0"
-                  style={{ zIndex: avatars.length - i }}
-                >
-                  <Image src={src} alt="" fill sizes="36px" className="object-cover" />
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              <div className="flex items-center">
+                {avatars.map((src, i) => (
+                  <span
+                    key={src}
+                    className="relative -ml-2.5 size-8 sm:size-9 overflow-hidden rounded-full border-2 border-white first:ml-0"
+                    style={{ zIndex: avatars.length - i }}
+                  >
+                    <Image src={src} alt="" fill sizes="36px" className="object-cover" />
+                  </span>
+                ))}
+                <span className="-ml-2.5 grid size-8 sm:size-9 place-items-center rounded-full border-2 border-white bg-mist text-[11px] font-semibold text-midnight">
+                  +51
                 </span>
-              ))}
-              <span className="-ml-2.5 grid size-9 place-items-center rounded-full border-2 border-white bg-mist text-[11px] font-semibold text-midnight">
-                +51
-              </span>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-2">
-                <span className="flex gap-0.5 text-brand-deep" aria-hidden>
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <StarIcon key={i} className="size-4" />
-                  ))}
-                </span>
-                <span className="text-[15px] font-medium">4.9/5</span>
               </div>
-              <p className="t-sm">
-                Trusted by <span className="font-semibold text-brand">54+</span> visionary brands
-              </p>
+
+              <div className="flex flex-col gap-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="flex gap-0.5 text-brand-deep" aria-hidden>
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <StarIcon key={i} className="size-3.5 sm:size-4" />
+                    ))}
+                  </span>
+                  <span className="text-[14px] sm:text-[15px] font-medium">4.9/5</span>
+                </div>
+                <p className="t-sm text-[12px] sm:text-[13px]">
+                  Trusted by <span className="font-semibold text-brand">54+</span> visionary brands
+                </p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -102,19 +104,17 @@ export function Compare() {
   );
 }
 
-
-
 function ColumnHeader({ children }: { children: string }) {
-  return <h3 className="t-h4sm px-5 py-5 lg:px-6">{children}</h3>;
+  return <h3 className="t-h4sm px-5 py-4 sm:py-5 lg:px-6">{children}</h3>;
 }
 
 function Row({ children, muted = false }: { children: string; muted?: boolean }) {
   return (
-    <li className="flex items-center gap-2.5 border-t border-dashed border-midnight-10 px-5 py-4 lg:px-6">
+    <li className="flex items-center gap-2.5 border-t border-dashed border-midnight-10 px-4 py-3.5 sm:px-5 sm:py-4 lg:px-6">
       <svg width="8" height="11" viewBox="0 0 7 10" fill="none" aria-hidden className="shrink-0 opacity-50">
         <path d="M1.5 1 5.5 5l-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      <span className={`text-[14px] lg:text-[15px] ${muted ? "text-slate" : "text-midnight"}`}>{children}</span>
+      <span className={`text-[13px] sm:text-[14px] lg:text-[15px] ${muted ? "text-slate" : "text-midnight"}`}>{children}</span>
     </li>
   );
 }

@@ -61,9 +61,9 @@ export function Faq() {
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
                       id={`faq-trigger-${i}`}
-                      className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left transition-colors hover:bg-mist/60 cursor-pointer"
+                      className="flex w-full items-center justify-between gap-3 sm:gap-4 px-4 py-4 sm:px-5 sm:py-5 text-left transition-colors hover:bg-mist/60 cursor-pointer"
                     >
-                      <span className="text-[15px] font-medium tracking-[-0.02em] text-midnight lg:text-[17px]">
+                      <span className="min-w-0 flex-1 text-[14px] sm:text-[15px] font-medium tracking-[-0.02em] text-midnight lg:text-[17px]">
                         {i + 1}. {faq.question}
                       </span>
                       <span className="grid size-6 shrink-0 place-items-center rounded-full bg-midnight text-white">
@@ -97,7 +97,7 @@ export function Faq() {
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <p className="t-body border-t border-dashed border-midnight-10 px-5 py-5">
+                      <p className="t-body border-t border-dashed border-midnight-10 px-4 py-4 sm:px-5 sm:py-5">
                         {faq.answer}
                       </p>
                     </div>

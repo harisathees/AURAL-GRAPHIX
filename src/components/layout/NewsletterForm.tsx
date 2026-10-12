@@ -15,7 +15,7 @@ export function NewsletterForm() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex items-center gap-2">
+    <form onSubmit={onSubmit} className="flex items-center gap-2 w-full max-w-[320px]">
       <label htmlFor="newsletter-email" className="sr-only">
         Email address
       </label>
@@ -27,7 +27,7 @@ export function NewsletterForm() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Enter your email"
         autoComplete="email"
-        className="h-11 w-full max-w-[220px] rounded-lg border border-midnight-10 bg-white px-3.5 text-[14px] text-midnight outline-none transition-colors placeholder:text-midnight-30 focus:border-brand"
+        className="h-11 w-full min-w-0 flex-1 rounded-lg border border-midnight-10 bg-white px-3.5 text-[14px] text-midnight outline-none transition-colors placeholder:text-midnight-30 focus:border-brand"
       />
       <button
         type="submit"
