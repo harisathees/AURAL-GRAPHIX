@@ -80,7 +80,7 @@ export function Carousel({
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
-      {/* Side Navigation Buttons (Desktop & Tablet) */}
+      {/* Side Navigation Buttons (Left & Right of Cards) */}
       {showSideArrows && pages > 1 && (
         <>
           <button
@@ -91,15 +91,13 @@ export function Carousel({
             }}
             aria-label="Previous project card"
             title="Previous project"
-            className="hidden sm:grid absolute -left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-30 size-11 lg:size-13 place-items-center rounded-full bg-white text-midnight shadow-[0_10px_25px_-5px_rgba(6,6,18,0.22)] border border-midnight-10 hover:bg-mist hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand"
+            className="hidden lg:grid absolute lg:-left-6 top-1/2 -translate-y-1/2 z-30 lg:size-13 place-items-center rounded-full bg-white text-midnight shadow-[0_10px_25px_-5px_rgba(6,6,18,0.22)] border border-midnight-10 hover:bg-mist hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand"
           >
             <svg
-              width="20"
-              height="20"
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden="true"
-              className="stroke-current"
+              className="stroke-current size-5"
             >
               <path d="M15 18l-6-6 6-6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -113,15 +111,13 @@ export function Carousel({
             }}
             aria-label="Next project card"
             title="Next project"
-            className="hidden sm:grid absolute -right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-30 size-11 lg:size-13 place-items-center rounded-full bg-white text-midnight shadow-[0_10px_25px_-5px_rgba(6,6,18,0.22)] border border-midnight-10 hover:bg-mist hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand"
+            className="hidden lg:grid absolute lg:-right-6 top-1/2 -translate-y-1/2 z-30 lg:size-13 place-items-center rounded-full bg-white text-midnight shadow-[0_10px_25px_-5px_rgba(6,6,18,0.22)] border border-midnight-10 hover:bg-mist hover:scale-110 active:scale-95 transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-brand"
           >
             <svg
-              width="20"
-              height="20"
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden="true"
-              className="stroke-current"
+              className="stroke-current size-5"
             >
               <path d="M9 18l6-6-6-6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -159,16 +155,14 @@ export function Carousel({
       </div>
 
       {/* Controls: Dots and navigation controls */}
-      {(showDots || showArrows || showSideArrows) && pages > 1 && (
+      {(showDots || showArrows) && pages > 1 && (
         <div className="mt-5 sm:mt-6 flex items-center justify-center gap-3">
-          {(showArrows || showSideArrows) && (
+          {showArrows && (
             <button
               type="button"
               onClick={() => go(index - 1)}
               aria-label="Previous slide"
-              className={`grid size-8 place-items-center rounded-full border border-midnight-10 bg-white text-midnight shadow-xs transition-colors hover:bg-mist active:scale-95 cursor-pointer ${
-                showSideArrows && !showArrows ? "sm:hidden" : ""
-              }`}
+              className="grid size-8 place-items-center rounded-full border border-midnight-10 bg-white text-midnight shadow-xs transition-colors hover:bg-mist active:scale-95 cursor-pointer"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="stroke-current">
                 <path d="M15 18l-6-6 6-6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
@@ -193,14 +187,12 @@ export function Carousel({
             </div>
           )}
 
-          {(showArrows || showSideArrows) && (
+          {showArrows && (
             <button
               type="button"
               onClick={() => go(index + 1)}
               aria-label="Next slide"
-              className={`grid size-8 place-items-center rounded-full border border-midnight-10 bg-white text-midnight shadow-xs transition-colors hover:bg-mist active:scale-95 cursor-pointer ${
-                showSideArrows && !showArrows ? "sm:hidden" : ""
-              }`}
+              className="grid size-8 place-items-center rounded-full border border-midnight-10 bg-white text-midnight shadow-xs transition-colors hover:bg-mist active:scale-95 cursor-pointer"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="stroke-current">
                 <path d="M9 18l6-6-6-6" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
