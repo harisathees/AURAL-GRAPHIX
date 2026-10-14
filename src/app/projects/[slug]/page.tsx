@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Button } from "@/components/ui/Button";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import { ProjectImageSlider } from "@/components/ui/ProjectImageSlider";
 import { Reveal } from "@/components/ui/Reveal";
 import { RichText, richTextToPlain } from "@/components/ui/RichText";
 import { projects } from "@/data/projects";
@@ -80,18 +81,13 @@ export default async function ProjectPage({ params }: Params) {
           </Reveal>
         </header>
 
-        {/* Hero image */}
+        {/* Hero image slider */}
         <Reveal delay={0.3} className="container-x mx-auto mt-10 max-w-[1060px]">
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-ivory sm:aspect-[16/10]">
-            <Image
-              src={project.thumbnail}
-              alt={`${project.title} brand identity`}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 1060px"
-              className="object-cover"
-            />
-          </div>
+          <ProjectImageSlider
+            images={[project.thumbnail, ...project.gallery]}
+            title={project.title}
+            priority
+          />
         </Reveal>
 
         {/* Meta bar */}

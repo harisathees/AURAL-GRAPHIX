@@ -36,13 +36,14 @@ export function FeaturedProjects() {
       </div>
 
       <Reveal delay={0.3} className="mt-8 w-full">
-        {/* Desktop: slideshow inside a framed rail, matching the source layout */}
+        {/* Desktop: slideshow inside a framed rail with side and bottom navigation buttons */}
         <div className="container-x mx-auto hidden max-w-[1060px] lg:block">
-          <div className="rounded-2xl border border-white bg-ivory p-5">
+          <div className="relative rounded-2xl border border-white bg-ivory p-5 sm:p-6">
             <Carousel
               label="Featured projects"
-              interval={5}
+              interval={0}
               gap={20}
+              showSideArrows={true}
               slides={featured.map((p, i) => (
                 <ProjectCard key={p.slug} project={p} layout="split" priority={i === 0} />
               ))}
@@ -50,13 +51,19 @@ export function FeaturedProjects() {
           </div>
         </div>
 
-        {/* Mobile / tablet: simple stacked list */}
-        <div className="container-x mx-auto flex max-w-[700px] flex-col gap-4 lg:hidden">
-          {featured.map((p, i) => (
-            <Reveal key={p.slug} delay={0.3 + i * 0.05}>
-              <ProjectCard project={p} priority={i === 0} />
-            </Reveal>
-          ))}
+        {/* Mobile / tablet: slideshow with stacked cards and navigation buttons */}
+        <div className="container-x mx-auto max-w-[700px] lg:hidden">
+          <div className="relative rounded-2xl border border-white bg-ivory p-4 sm:p-5">
+            <Carousel
+              label="Featured projects"
+              interval={0}
+              gap={16}
+              showSideArrows={true}
+              slides={featured.map((p, i) => (
+                <ProjectCard key={p.slug} project={p} layout="stacked" priority={i === 0} />
+              ))}
+            />
+          </div>
         </div>
       </Reveal>
     </section>
