@@ -84,8 +84,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <JsonLd data={[organizationSchema(), websiteSchema(), professionalServiceSchema()]} />
       </head>
-      <body className="overflow-x-hidden">
-        <div className="relative flex min-h-screen flex-col overflow-x-hidden">
+      <body className="overflow-x-clip">
+        <div className="relative flex min-h-screen flex-col overflow-x-clip">
           <a
             href="#main"
             className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-midnight focus:px-4 focus:py-2 focus:text-white"

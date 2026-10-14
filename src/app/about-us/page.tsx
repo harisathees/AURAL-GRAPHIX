@@ -51,7 +51,7 @@ export default function AboutPage() {
 
             <div className="relative min-h-[280px] overflow-hidden rounded-lg bg-mist lg:min-h-[340px]">
               <Image
-                src="/assets/team/praveen-gunal.webp"
+                src="/assets/team/teams_img.png"
                 alt="The Aural Graphix team"
                 fill
                 priority
@@ -86,7 +86,7 @@ export default function AboutPage() {
                 className="h-full w-full object-cover"
               />
 
-              <div className="inset-y-6 right-6 w-[280px] rounded-xl border border-white bg-white p-5 max-lg:m-5 lg:absolute lg:w-[300px]">
+              <div className="inset-y-6 right-6 w-auto max-lg:mx-4 max-lg:my-5 sm:max-lg:mx-5 rounded-xl border border-white bg-white p-4 sm:p-5 lg:absolute lg:w-[300px]">
                 <h3 className="t-h6">Core Values</h3>
                 <ul className="mt-4 flex flex-col gap-3">
                   {coreValues.map((value) => (
@@ -223,7 +223,7 @@ function TeamCard({
 function SocialRow({ name }: { name: string }) {
   const links = site.socials.filter((s) => s.icon !== "facebook");
   return (
-    <ul className="mt-3 flex items-center gap-1.5">
+    <ul className="mt-3 flex flex-wrap items-center gap-1.5">
       {links.map((s) => {
         const Icon = socialIcons[s.icon];
         return (

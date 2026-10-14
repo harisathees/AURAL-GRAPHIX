@@ -107,8 +107,8 @@ export function Hero() {
  */
 function HeroRings() {
   const rings = [
-    { size: 1800, visible: "clamp(40px, 30vw, 400px)", ring: 10, delay: 0.25, spin: true },
-    { size: 1400, visible: "clamp(0px, calc(24vw - 70px), 250px)", ring: 8, delay: 0.13, spin: false },
+    { size: 1800, visible: "clamp(24px, 22vw, 400px)", ring: 10, delay: 0.25, spin: true },
+    { size: 1400, visible: "clamp(0px, calc(18vw - 50px), 250px)", ring: 8, delay: 0.13, spin: false },
     { size: 1000, visible: "clamp(10px, 8vw, 100px)", ring: 6, delay: 0.05, spin: false, hideOnMobile: true },
   ];
 
@@ -146,7 +146,7 @@ function RingTrack({ reverse, seed, ring }: { reverse: boolean; seed: number; ri
       {Array.from({ length: 6 }).map((_, k) => (
         <div
           key={k}
-          className="absolute top-1/2 left-1/2 h-full w-[76px]"
+          className="absolute top-1/2 left-1/2 h-full w-[54px] sm:w-[66px] lg:w-[76px]"
           style={{ transform: `translate(-50%, -50%) rotate(${k * 30}deg)` }}
         >
           <div className="absolute left-0 w-full" style={{ top: ring / 2, transform: "translateY(-50%)" }}>
@@ -165,9 +165,9 @@ function RingGlyph({ index, className = "" }: { index: number; className?: strin
   const icon = toolIcons[index % toolIcons.length];
   return (
     <div
-      className={`grid size-[76px] place-items-center rounded-2xl border border-white bg-white/80 shadow-[0_8px_22px_-14px_rgb(6_6_18/0.3)] ${className}`}
+      className={`grid size-[54px] sm:size-[66px] lg:size-[76px] place-items-center rounded-xl sm:rounded-2xl border border-white bg-white/80 shadow-[0_8px_22px_-14px_rgb(6_6_18/0.3)] ${className}`}
     >
-      <Image src={icon.src} alt="" width={40} height={40} className="size-10" />
+      <Image src={icon.src} alt="" width={40} height={40} className="size-7 sm:size-8 lg:size-10" />
     </div>
   );
 }

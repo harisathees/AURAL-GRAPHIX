@@ -17,6 +17,15 @@ interface RevealProps {
   id?: string;
 }
 
+const motionCache = new Map<ElementType, any>();
+
+function getMotionComponent(as: ElementType) {
+  if (!motionCache.has(as)) {
+    motionCache.set(as, motion.create(as));
+  }
+  return motionCache.get(as);
+}
+
 export function Reveal({
   children,
   delay = 0,
@@ -27,7 +36,7 @@ export function Reveal({
   onMount = false,
   id,
 }: RevealProps) {
-  const MotionTag = motion.create(as as ElementType);
+  const MotionTag = getMotionComponent(as);
   const v = variants ?? appear(delay, y);
 
   return (

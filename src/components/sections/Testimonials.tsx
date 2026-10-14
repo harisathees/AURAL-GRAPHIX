@@ -9,8 +9,8 @@ import { testimonials } from "@/data/content";
 
 const avatarFor = (name: string) =>
   ({
-    "Olivia Carter": "/assets/team/praveen-gunal.webp",
-    "Ethan Miller": "/assets/team/bala-vasanth.webp",
+    "Mithran": "/assets/avatar-default.webp",
+    "Iniya": "/assets/avatar-default.webp",
   })[name] ?? "/assets/avatar-default.webp";
 
 export function Testimonials() {

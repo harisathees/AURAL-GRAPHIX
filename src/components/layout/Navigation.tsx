@@ -31,18 +31,18 @@ export function Navigation() {
   return (
     <>
       <motion.header
-        className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-4 sm:pt-5"
+        className="fixed inset-x-0 top-0 z-50 flex justify-center px-2.5 pt-2.5 sm:px-4 sm:pt-5"
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", duration: 0.6, bounce: 0, delay: 0.1 }}
       >
         <nav
           aria-label="Main"
-          className="flex w-fit max-w-[400px] min-w-0 items-stretch justify-center overflow-hidden rounded-xl border border-white bg-white/85 shadow-[0_10px_30px_-18px_rgb(6_6_18/0.35)] backdrop-blur-xl"
+          className="flex w-full max-w-[390px] sm:w-fit min-w-0 items-stretch justify-between sm:justify-center overflow-hidden rounded-xl border border-white bg-white/90 shadow-[0_10px_30px_-18px_rgb(6_6_18/0.35)] backdrop-blur-xl"
         >
           <Link
             href="/"
-            className="flex min-w-0 items-center gap-1.5 px-3 py-2.5 transition-opacity hover:opacity-70 sm:gap-2 sm:px-4 sm:py-3"
+            className="flex min-w-0 items-center gap-1.5 px-3 py-2 transition-opacity hover:opacity-70 sm:gap-2 sm:px-4 sm:py-3"
             aria-label={`${site.name} — home`}
           >
             <Image
@@ -51,7 +51,7 @@ export function Navigation() {
               width={28}
               height={28}
               priority
-              className="h-[22px] w-auto shrink-0 sm:h-7"
+              className="h-[20px] w-auto shrink-0 sm:h-7"
             />
             <Image
               src="/assets/logo-wordmark.webp"
@@ -59,41 +59,43 @@ export function Navigation() {
               width={110}
               height={29}
               priority
-              className="h-[13px] w-auto min-w-0 shrink sm:h-[18px]"
+              className="h-[12px] w-auto min-w-0 shrink sm:h-[18px]"
             />
           </Link>
 
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-controls="site-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="grid w-11 shrink-0 place-items-center border-l sm:border-x border-midnight-10 transition-colors hover:bg-mist sm:w-14"
-          >
-            <span className="relative block h-3 w-5">
-              <motion.span
-                className="absolute left-0 block h-[1.6px] w-full rounded bg-midnight"
-                animate={open ? { top: 5, rotate: 45 } : { top: 1, rotate: 0 }}
-                transition={{ duration: 0.25, ease: [0.44, 0, 0.56, 1] }}
-              />
-              <motion.span
-                className="absolute left-0 block h-[1.6px] w-full rounded bg-midnight"
-                animate={open ? { top: 5, rotate: -45 } : { top: 9, rotate: 0 }}
-                transition={{ duration: 0.25, ease: [0.44, 0, 0.56, 1] }}
-              />
-            </span>
-          </button>
-
-          <div className="hidden sm:flex shrink-0 items-center px-2 sm:px-3">
-            <Button
-              href="/contact-us"
-              variant="dark"
-              size="sm"
-              className="h-8 px-3 text-[12px] sm:h-9 sm:px-4 sm:text-[13px]"
+          <div className="flex items-stretch">
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="site-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="grid w-11 shrink-0 place-items-center border-l sm:border-x border-midnight-10 transition-colors hover:bg-mist sm:w-14"
             >
-              Get started
-            </Button>
+              <span className="relative block h-3 w-5">
+                <motion.span
+                  className="absolute left-0 block h-[1.6px] w-full rounded bg-midnight"
+                  animate={open ? { top: 5, rotate: 45 } : { top: 1, rotate: 0 }}
+                  transition={{ duration: 0.25, ease: [0.44, 0, 0.56, 1] }}
+                />
+                <motion.span
+                  className="absolute left-0 block h-[1.6px] w-full rounded bg-midnight"
+                  animate={open ? { top: 5, rotate: -45 } : { top: 9, rotate: 0 }}
+                  transition={{ duration: 0.25, ease: [0.44, 0, 0.56, 1] }}
+                />
+              </span>
+            </button>
+
+            <div className="hidden sm:flex shrink-0 items-center px-2 sm:px-3">
+              <Button
+                href="/contact-us"
+                variant="dark"
+                size="sm"
+                className="h-8 px-3 text-[12px] sm:h-9 sm:px-4 sm:text-[13px]"
+              >
+                Get started
+              </Button>
+            </div>
           </div>
         </nav>
       </motion.header>
@@ -113,7 +115,7 @@ export function Navigation() {
             />
             <motion.div
               id="site-menu"
-              className="fixed inset-x-3 top-[70px] z-50 mx-auto max-w-[400px] overflow-hidden rounded-2xl border border-white bg-white shadow-[0_24px_60px_-24px_rgb(6_6_18/0.4)] sm:inset-x-4 sm:top-[88px]"
+              className="fixed inset-x-2.5 top-[62px] z-50 mx-auto max-w-[390px] max-h-[calc(100dvh-80px)] overflow-y-auto no-scrollbar rounded-2xl border border-white bg-white shadow-[0_24px_60px_-24px_rgb(6_6_18/0.4)] sm:inset-x-4 sm:top-[88px]"
               initial={{ opacity: 0, y: -12, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
@@ -133,7 +135,7 @@ export function Navigation() {
                       <Link
                         href={item.href}
                         aria-current={active ? "page" : undefined}
-                        className={`t-nav flex w-full items-center py-4 transition-colors ${
+                        className={`t-nav flex w-full items-center py-3.5 sm:py-4 transition-colors ${
                           active ? "text-slate" : "text-midnight hover:text-brand"
                         }`}
                       >
@@ -144,7 +146,13 @@ export function Navigation() {
                 })}
               </ul>
 
-              <div className="flex items-center justify-between gap-4 px-5 py-4">
+              <div className="p-4 sm:hidden">
+                <Button href="/contact-us" variant="brand" className="w-full">
+                  Get started
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-midnight-05 px-5 py-3.5 sm:py-4">
                 <ul className="flex items-center gap-1.5">
                   {site.socials.map((s) => {
                     const Icon = socialIcons[s.icon];
