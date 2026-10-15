@@ -191,7 +191,7 @@ function MobileStackCard({
         top: `calc(var(--header-height, 64px) + 16px + ${index} * var(--card-offset, 10px))`,
         zIndex: 10 + index,
         // Tighter scroll distance for responsive, compact stacking animation
-        marginBottom: isLast ? "20vh" : "20vh",
+        marginBottom: isLast ? "20vh" : "5vh",
       }}
     >
       <motion.div
