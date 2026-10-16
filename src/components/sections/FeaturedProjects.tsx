@@ -12,7 +12,7 @@ const featured = projects.filter((p) => p.featured);
 
 export function FeaturedProjects() {
   return (
-    <section id="projects" className="section overflow-hidden pb-16">
+    <section id="projects" className="section overflow-hidden pb-16 pt-8 sm:pt-12 lg:pt-[110px]">
       <div className="container-x mx-auto max-w-[700px]">
         <div className="relative flex flex-col items-center gap-4 text-center">
           <Reveal delay={0.1}>

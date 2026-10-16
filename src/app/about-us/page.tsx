@@ -134,7 +134,7 @@ export default function AboutPage() {
                       {Array.from({ length: 3 }).map((_, k) => (
                         <span
                           key={k}
-                          className={`size-1.5 rounded-full ${k === 2 ? "bg-midnight" : "bg-midnight-18"}`}
+                          className={`size-1.5 rounded-full ${k === i ? "bg-midnight" : "bg-midnight-18"}`}
                         />
                       ))}
                     </span>
