@@ -35,7 +35,7 @@ export function Process() {
   return (
     <section id="process" className="section overflow-hidden">
       <div className="container-x mx-auto max-w-[1200px]">
-        <div ref={trackRef} className="relative min-h-[170vh] sm:min-h-[180vh] lg:min-h-[200vh]">
+        <div ref={trackRef} className="relative min-h-[70vh] sm:min-h-[80vh] lg:min-h-[80vh]">
           <div className="sticky top-16 sm:top-20 lg:top-28 flex flex-col items-center gap-5 sm:gap-7 lg:gap-[30px]">
             <div className="flex w-full max-w-[700px] flex-col items-center gap-3 sm:gap-4 text-center">
               <Reveal delay={0.1}>
@@ -110,9 +110,8 @@ export function Process() {
                   {processSteps.map((s, i) => (
                     <span
                       key={s.number}
-                      className={`size-1.5 sm:size-2 rounded-full transition-colors duration-300 ${
-                        i === index ? "bg-midnight" : "bg-midnight-18"
-                      }`}
+                      className={`size-1.5 sm:size-2 rounded-full transition-colors duration-300 ${i === index ? "bg-midnight" : "bg-midnight-18"
+                        }`}
                       aria-hidden
                     />
                   ))}

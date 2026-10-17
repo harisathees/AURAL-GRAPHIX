@@ -5,7 +5,6 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/data/site";
-import { inView } from "@/lib/motion";
 
 /** The "Ready to start your next project?" banner shared across every page. */
 export function CtaBanner() {
@@ -14,7 +13,7 @@ export function CtaBanner() {
       <div className="container-x mx-auto max-w-[1060px]">
         <Reveal className="shell">
           <div className="relative isolate overflow-hidden rounded-xl bg-gradient-to-r from-[rgb(238_233_250)] via-[rgb(198_175_244)] to-[rgb(134_82_231)] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-14">
-            <Rings />
+
 
             <div className="relative z-2 grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
               <div className="flex flex-col items-start gap-4 sm:gap-5">
@@ -92,45 +91,5 @@ export function CtaBanner() {
         </Reveal>
       </div>
     </section>
-  );
-}
-
-function Rings() {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-1 overflow-hidden" aria-hidden>
-      <svg
-        className="size-full"
-        viewBox="0 0 1000 385"
-        preserveAspectRatio="none"
-        fill="none"
-      >
-        {/* Upper arc: dipping into upper-center of the banner */}
-        <motion.circle
-          cx="490"
-          cy="-110"
-          r="188"
-          stroke="#2e146d"
-          strokeWidth="6.5"
-          vectorEffect="non-scaling-stroke"
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
-          viewport={inView}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-        />
-
-        {/* Lower arc: starting from bottom edge, passing behind the card to the bottom right */}
-        <motion.path
-          d="M 505 385 A 270 240 0 0 1 995 385"
-          stroke="#2e146d"
-          strokeWidth="7.5"
-          strokeLinecap="round"
-          vectorEffect="non-scaling-stroke"
-          initial={{ pathLength: 0, opacity: 0 }}
-          whileInView={{ pathLength: 1, opacity: 1 }}
-          viewport={inView}
-          transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        />
-      </svg>
-    </div>
   );
 }

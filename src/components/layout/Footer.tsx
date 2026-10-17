@@ -11,10 +11,12 @@ export function Footer() {
         <div className="grid gap-10 border-t border-midnight-10 pt-12 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-8 lg:gap-12">
           {/* Brand + newsletter */}
           <div className="flex flex-col gap-5">
-            <Link href="/" aria-label={`${site.name} — home`} className="w-fit transition-opacity hover:opacity-70">
-              <Image src="/assets/logo-black.webp" alt={site.name} width={130} height={87} className="h-14 w-auto" />
-            </Link>
-            <p className="t-sm max-w-[30ch]">{site.shortDescription}</p>
+            <div className="flex items-center gap-3">
+              <Link href="/" aria-label={`${site.name} — home`} className="shrink-0 transition-opacity hover:opacity-70">
+                <Image src="/assets/logo-black.webp" alt={site.name} width={130} height={87} className="h-10 w-auto" />
+              </Link>
+              <p className="t-sm max-w-[30ch]">{site.shortDescription}</p>
+            </div>
             <div className="flex flex-col gap-3">
               <p className="text-[15px] font-medium tracking-[-0.02em]">Updates that keep you ahead</p>
               <NewsletterForm />
