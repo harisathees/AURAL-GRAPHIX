@@ -40,20 +40,34 @@ export function ContactForm() {
       return;
     }
 
+    
     setStatus("sending");
 
     try {
-      const res = await fetch(ENDPOINT, {
+      await fetch(ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...data, submittedAt: new Date().toISOString() }),
+        mode: "no-cors",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          company: data.company,
+          message: data.message,
+          submittedAt: new Date().toISOString(),
+        }),
       });
-      if (!res.ok) throw new Error("Request failed");
+
+      // A no-cors response cannot confirm server-side success.
       setStatus("sent");
       form.reset();
-    } catch {
+    } catch (error) {
+      console.error("Contact submission failed:", error);
       setStatus("error");
     }
+
   }
 
   return (
