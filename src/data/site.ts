@@ -24,10 +24,10 @@ export const site = {
   founded: "2024",
   bookingUrl: "https://cal.com/",
   socials: [
-    { name: "Facebook", href: "https://www.facebook.com/", icon: "facebook" },
-    { name: "Instagram", href: "https://www.instagram.com/", icon: "instagram" },
-    { name: "LinkedIn", href: "https://www.linkedin.com/", icon: "linkedin" },
-    { name: "X", href: "https://x.com/", icon: "x" },
+    { name: "Facebook", href: "https://www.facebook.com/share/1MpsjsH3td/", icon: "facebook" },
+    { name: "Instagram", href: "https://www.instagram.com/auralgraphix?dlrf=MWN3b3Z1MjJidG15cQ==", icon: "instagram" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/in/aural-graphix-0875b9444?utm_source=share_via&utm_content=profile&utm_medium=member_android", icon: "linkedin" },
+    { name: "X", href: "https://x.com/AURALGRAPHIX", icon: "x" },
   ],
 } as const;
 
