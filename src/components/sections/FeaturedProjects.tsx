@@ -54,7 +54,7 @@ export function FeaturedProjects() {
         {/* Mobile / tablet: touch-scrollable cards without arrows */}
         <div className="container-x mx-auto max-w-[700px] lg:hidden">
           <div className="relative rounded-2xl border border-white bg-ivory p-3.5 sm:p-5">
-            <div className="flex w-full gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar touch-pan-x py-1">
+            <div className="flex w-full gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar overscroll-x-contain py-1">
               {featured.map((p, i) => (
                 <div key={p.slug} className="w-[88%] sm:w-[92%] shrink-0 snap-center">
                   <ProjectCard key={p.slug} project={p} layout="stacked" priority={i === 0} />
