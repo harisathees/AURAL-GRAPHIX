@@ -1,17 +1,22 @@
 "use client";
 
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { PreTitle } from "@/components/ui/PreTitle";
 import { Reveal } from "@/components/ui/Reveal";
 import { processSteps } from "@/data/content";
 
-/**
- * The source "Process" section is a sticky panel whose variant is driven by
- * scroll position across a 180vh track. This reproduces that behaviour with
- * a scroll-linked index and an arc that fills as you progress.
- */
+/** Angle (deg) between two neighbouring step badges on the dial. */
+const GAP = 26;
+
 export function Process() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -20,8 +25,6 @@ export function Process() {
     target: trackRef,
     offset: ["start start", "end end"],
   });
-
-  const arc = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
@@ -47,25 +50,13 @@ export function Process() {
             </div>
 
             <Reveal delay={0.3} className="relative flex w-full flex-col items-center">
-              {/* Step badge */}
+              {/* Step label + dial anchor */}
               <div className="relative z-2 flex flex-col items-center gap-1.5 sm:gap-2">
                 <p className="t-pretitle text-[11px] sm:text-[12px]">Step</p>
-                <AnimatePresence mode="wait">
-                  <motion.span
-                    key={step.number}
-                    className="grid size-9 sm:size-11 place-items-center rounded-lg bg-brand text-[16px] sm:text-[18px] font-medium text-white shadow-[0_10px_24px_-14px_rgb(111_70_212/0.9)]"
-                    initial={{ opacity: 0, y: -10, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                    transition={{ duration: 0.28, ease: [0.44, 0, 0.56, 1] }}
-                  >
-                    {step.number}
-                  </motion.span>
-                </AnimatePresence>
+                <div className="relative size-12 sm:size-14 lg:size-16">
+                  <Arc index={index} />
+                </div>
               </div>
-
-              {/* Arc */}
-              <Arc progress={arc} />
 
               {/* Panel */}
               <div className="relative z-2 mt-8 sm:mt-12 lg:mt-24 flex w-full max-w-[560px] flex-col items-center gap-4 sm:gap-5 px-4 sm:px-5 text-center">
@@ -78,14 +69,14 @@ export function Process() {
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.35, ease: [0.44, 0, 0.56, 1] }}
                   >
-                    <h3 className="t-h4">{step.title}</h3>
-                    <p className="t-medium max-w-[46ch] text-[14px] sm:text-[16px]">{step.description}</p>
+                    <h3 className="t-h3">{step.title}</h3>
+                    <p className="t-medium max-w-[46ch] text-[16px] sm:text-[18px]">{step.description}</p>
 
                     <div className="flex w-full flex-col gap-2.5 sm:gap-3">
                       <span className="h-px w-full border-t border-dashed border-midnight-18" aria-hidden />
                       <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 sm:gap-y-2">
                         {step.features.map((f, k) => (
-                          <li key={f} className="t-pretitle text-[10px] sm:text-[12px] flex items-center gap-2 sm:gap-3">
+                          <li key={f} className="t-pretitle text-[12px] sm:text-[13px] flex items-center gap-2 sm:gap-3">
                             {k > 0 && <span className="size-1 rounded-full bg-midnight-30" aria-hidden />}
                             {f}
                           </li>
@@ -128,38 +119,83 @@ export function Process() {
   );
 }
 
-function Arc({ progress }: { progress: ReturnType<typeof useTransform<number, number>> }) {
-  const pathLength = progress;
+function Arc({ index }: { index: number }) {
+  const rot = useSpring(0, { stiffness: 110, damping: 20, mass: 0.8 });
+
+  useEffect(() => {
+    rot.set(-index * GAP);
+  }, [index, rot]);
 
   return (
-    <div className="pointer-events-none absolute top-4 sm:top-6 lg:top-8 left-1/2 z-0 w-[640px] sm:w-[980px] lg:w-[1400px] max-w-none -translate-x-1/2" aria-hidden>
-      <svg viewBox="0 0 1400 420" fill="none" className="w-full">
-        <path
-          d="M20 420C20 200 330 30 700 30s680 170 680 390"
-          stroke="rgb(238 236 234)"
-          strokeWidth="2"
-          strokeLinecap="round"
+    <div
+      className="pointer-events-none absolute left-1/2 top-1/2 -z-10 aspect-square w-[720px] sm:w-[1100px] lg:w-[1500px] max-w-none -translate-x-1/2"
+      aria-hidden
+    >
+      {/* Filled half-disc */}
+      <div
+        className="absolute inset-x-0 top-0 h-1/2"
+        style={{
+          borderRadius: "9999px 9999px 0 0",
+          background:
+            "linear-gradient(to bottom, rgb(235 234 232) 0%, rgb(242 241 240) 55%, rgb(244 243 242 / 0) 100%)",
+          border: "2px solid rgb(228 227 225)",
+          borderBottom: "none",
+          boxShadow: "inset 0 0px 28px -6px rgb(0 0 0 / 0.22)",
+          maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+        }}
+      >
+        <div
+          className="absolute"
+          style={{
+            inset: "15px 15px 0",
+            borderRadius: "9999px 9999px 0 0",
+            border: "1px solid rgb(255 255 255 / 0.9)",
+            borderBottom: "none",
+          }}
         />
-        <motion.path
-          d="M20 420C20 200 330 30 700 30s680 170 680 390"
-          stroke="rgb(111 70 212 / 0.35)"
-          strokeWidth="2"
-          strokeLinecap="round"
-          style={{ pathLength }}
-        />
-        <path
-          d="M20 420C20 200 330 30 700 30s680 170 680 390"
-          fill="url(#arcFill)"
-          stroke="none"
-          opacity="0.5"
-        />
-        <defs>
-          <linearGradient id="arcFill" x1="700" y1="30" x2="700" y2="420" gradientUnits="userSpaceOnUse">
-            <stop stopColor="white" stopOpacity="0.85" />
-            <stop offset="1" stopColor="white" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
+      </div>
+
+      {/* Rotating rim */}
+      <motion.div className="absolute inset-0" style={{ rotate: rot }}>
+        {processSteps.map((s, i) => (
+          <ArcBadge key={s.number} number={s.number} base={i * GAP} rot={rot} />
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+function ArcBadge({
+  number,
+  base,
+  rot,
+}: {
+  number: string;
+  base: number;
+  rot: MotionValue<number>;
+}) {
+  const angle = useTransform(rot, (r) => r + base);
+  const opacity = useTransform(angle, (a) => {
+    const d = Math.abs(a);
+    return d > 78 ? 0 : d > 58 ? (78 - d) / 20 : 1;
+  });
+  const active = useTransform(angle, (a) => Math.max(0, 1 - Math.abs(a) / GAP));
+
+  return (
+    <div className="absolute inset-0" style={{ transform: `rotate(${base}deg)` }}>
+      <motion.span
+        style={{ opacity }}
+        className="absolute left-1/2 top-[5px] grid size-11 sm:size-13 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white text-[17px] sm:text-[19px] font-medium text-[rgb(90_90_96)] shadow-[0_6px_16px_-10px_rgb(0_0_0/0.35)]"
+      >
+        {number}
+        <motion.span
+          style={{ opacity: active }}
+          className="absolute inset-0 grid place-items-center rounded-lg bg-brand text-white shadow-[0_0_0_2px_rgb(0_0_0/0.55),0_10px_24px_-14px_rgb(111_70_212/0.9)]"
+        >
+          {number}
+        </motion.span>
+      </motion.span>
     </div>
   );
 }
