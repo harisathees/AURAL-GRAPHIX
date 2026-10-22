@@ -130,8 +130,9 @@ export function Carousel({
         <motion.div
           ref={trackRef}
           className="flex cursor-grab active:cursor-grabbing"
-          style={{ gap }}
+          style={{ gap, touchAction: "pan-y" }}
           drag="x"
+          dragDirectionLock
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.12}
           onDragEnd={onDragEnd}
