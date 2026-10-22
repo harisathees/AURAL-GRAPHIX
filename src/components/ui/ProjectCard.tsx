@@ -41,7 +41,8 @@ export function ProjectCard({ project, layout = "stacked", priority = false }: P
             fill
             sizes="(max-width: 1024px) 90vw, 420px"
             priority={priority}
-            className="object-cover transition-opacity duration-300"
+            className="object-cover transition-opacity duration-300 pointer-events-none select-none"
+            draggable={false}
           />
         </div>
       </article>
@@ -57,7 +58,8 @@ export function ProjectCard({ project, layout = "stacked", priority = false }: P
           fill
           sizes="(max-width: 768px) 90vw, 480px"
           priority={priority}
-          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.03] pointer-events-none select-none"
+          draggable={false}
         />
       </div>
 
