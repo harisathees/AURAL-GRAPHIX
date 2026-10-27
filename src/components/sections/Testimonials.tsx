@@ -15,7 +15,7 @@ const avatarFor = (name: string) =>
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="section relative">
+    <section id="testimonials" className="section relative pt-5 sm:pt-10 lg:pt-[110px]">
       <div className="container-x mx-auto max-w-[700px]">
         <div className="flex flex-col items-center gap-4 text-center">
           <Reveal delay={0.1}>
