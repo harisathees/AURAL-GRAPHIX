@@ -19,18 +19,15 @@ const GAP = 26;
 
 export function Process() {
   const trackRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: trackRef,
-    offset: ["start start", "end end"],
-  });
+  const { scrollY } = useScroll();
 
   const scrollToStep = (targetIndex: number) => {
-    if (!trackRef.current) return;
+    if (!trackRef.current || !stickyRef.current) return;
     const rect = trackRef.current.getBoundingClientRect();
     const trackTop = window.scrollY + rect.top;
-    const maxScroll = trackRef.current.offsetHeight - window.innerHeight;
+    const maxScroll = Math.max(1, trackRef.current.offsetHeight - stickyRef.current.offsetHeight);
     const targetProgress = (targetIndex + 0.5) / processSteps.length;
     window.scrollTo({
       top: trackTop + targetProgress * maxScroll,
@@ -39,24 +36,60 @@ export function Process() {
   };
 
   useEffect(() => {
-    const sync = (v: number) => {
-      const next = Math.min(processSteps.length - 1, Math.floor(v * processSteps.length));
+    const update = () => {
+      if (!trackRef.current || !stickyRef.current) return;
+      const rect = trackRef.current.getBoundingClientRect();
+      const trackTop = window.scrollY + rect.top;
+      const stickyH = stickyRef.current.offsetHeight;
+      const maxScroll = Math.max(1, trackRef.current.offsetHeight - stickyH);
+      const currentScroll = window.scrollY - trackTop;
+      const progress = Math.min(1, Math.max(0, currentScroll / maxScroll));
+      const next = Math.min(processSteps.length - 1, Math.floor(progress * processSteps.length));
       setIndex(next);
     };
 
-    sync(scrollYProgress.get());
-    return scrollYProgress.on("change", sync);
-  }, [scrollYProgress]);
+    update();
+    const unsub = scrollY.on("change", update);
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      unsub();
+      window.removeEventListener("resize", update);
+    };
+  }, [scrollY]);
+
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    touchStartX.current = null;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        scrollToStep(Math.min(processSteps.length - 1, index + 1));
+      } else {
+        scrollToStep(Math.max(0, index - 1));
+      }
+    }
+  };
 
   const step = processSteps[index];
 
   return (
-    <section id="process" className="section overflow-clip">
+    <section id="process" className="section overflow-clip pb-0 pt-8 sm:pt-12 lg:pt-[110px]">
       <div className="container-x mx-auto max-w-[1200px]">
-        {/* Pinned scroll track with generous height for 5 distinct, equal scroll increments */}
-        <div ref={trackRef} className="relative h-[300vh] sm:h-[350vh] lg:h-[400vh]">
-          <div className="sticky top-12 sm:top-16 lg:top-24 flex flex-col items-center gap-5 sm:gap-7 lg:gap-[30px]">
-            <div className="flex w-full max-w-[700px] flex-col items-center gap-3 sm:gap-4 text-center">
+        {/* Pinned scroll track calibrated for small screen tight spacing without excessive gap between Process & Testimonials */}
+        <div ref={trackRef} className="relative min-h-[500px] h-[66vh] sm:min-h-[640px] sm:h-[95vh] lg:min-h-[850px] lg:h-[150vh]">
+          <div
+            ref={stickyRef}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            className="sticky top-4 sm:top-10 lg:top-20 flex flex-col items-center gap-3 sm:gap-6 lg:gap-[30px]"
+          >
+            <div className="flex w-full max-w-[700px] flex-col items-center gap-2.5 sm:gap-4 text-center">
               <Reveal delay={0.1}>
                 <PreTitle>Process</PreTitle>
               </Reveal>
@@ -67,33 +100,33 @@ export function Process() {
 
             <Reveal delay={0.3} className="relative flex w-full flex-col items-center">
               {/* Step label + dial anchor */}
-              <div className="relative z-2 flex flex-col items-center gap-1.5 sm:gap-2">
+              <div className="relative z-2 flex flex-col items-center gap-1 sm:gap-2">
                 <p className="t-pretitle text-[11px] sm:text-[12px]">Step</p>
                 <div className="relative size-12 sm:size-14 lg:size-16">
-                  <Arc index={index} />
+                  <Arc index={index} onSelect={scrollToStep} />
                 </div>
               </div>
 
               {/* Panel with fixed min-height to guarantee ZERO layout shift */}
-              <div className="relative z-2 mt-8 sm:mt-12 lg:mt-24 flex w-full max-w-[560px] flex-col items-center gap-4 sm:gap-5 px-4 sm:px-5 text-center">
-                <div className="min-h-[160px] sm:min-h-[170px] flex w-full flex-col items-center justify-start">
+              <div className="relative z-2 mt-4 sm:mt-8 lg:mt-20 flex w-full max-w-[560px] flex-col items-center gap-3 sm:gap-5 px-4 sm:px-5 text-center">
+                <div className="min-h-[135px] sm:min-h-[160px] flex w-full flex-col items-center justify-start">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={step.title}
-                      className="flex w-full flex-col items-center gap-3 sm:gap-4"
+                      className="flex w-full flex-col items-center gap-2.5 sm:gap-4"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.25, ease: [0.44, 0, 0.56, 1] }}
                     >
                       <h3 className="t-h3">{step.title}</h3>
-                      <p className="t-medium max-w-[46ch] text-[16px] sm:text-[18px]">{step.description}</p>
+                      <p className="t-medium max-w-[46ch] text-[15px] sm:text-[18px]">{step.description}</p>
 
-                      <div className="flex w-full flex-col gap-2.5 sm:gap-3">
+                      <div className="flex w-full flex-col gap-2 sm:gap-3">
                         <span className="h-px w-full border-t border-dashed border-midnight-18" aria-hidden />
                         <ul className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 sm:gap-y-2">
                           {step.features.map((f, k) => (
-                            <li key={f} className="t-pretitle text-[12px] sm:text-[13px] flex items-center gap-2 sm:gap-3">
+                            <li key={f} className="t-pretitle text-[11px] sm:text-[13px] flex items-center gap-2 sm:gap-3">
                               {k > 0 && <span className="size-1 rounded-full bg-midnight-30" aria-hidden />}
                               {f}
                             </li>
@@ -111,7 +144,7 @@ export function Process() {
               </div>
 
               {/* Progress readout */}
-              <div className="relative z-2 mt-6 sm:mt-8 flex flex-col items-center gap-2 sm:gap-3">
+              <div className="relative z-2 mt-3 sm:mt-6 flex flex-col items-center gap-1.5 sm:gap-3">
                 <p className="t-pretitle text-[11px] sm:text-[12px] tabular-nums">
                   {step.number}/{String(processSteps.length).padStart(2, "0")}
                 </p>
@@ -140,7 +173,7 @@ export function Process() {
   );
 }
 
-function Arc({ index }: { index: number }) {
+function Arc({ index, onSelect }: { index: number; onSelect?: (i: number) => void }) {
   const rot = useSpring(0, { stiffness: 110, damping: 20, mass: 0.8 });
 
   useEffect(() => {
@@ -180,7 +213,7 @@ function Arc({ index }: { index: number }) {
       {/* Rotating rim */}
       <motion.div className="absolute inset-0" style={{ rotate: rot }}>
         {processSteps.map((s, i) => (
-          <ArcBadge key={s.number} number={s.number} base={i * GAP} rot={rot} />
+          <ArcBadge key={s.number} number={s.number} base={i * GAP} rot={rot} onClick={() => onSelect?.(i)} />
         ))}
       </motion.div>
     </div>
@@ -191,10 +224,12 @@ function ArcBadge({
   number,
   base,
   rot,
+  onClick,
 }: {
   number: string;
   base: number;
   rot: MotionValue<number>;
+  onClick?: () => void;
 }) {
   const angle = useTransform(rot, (r) => r + base);
   const opacity = useTransform(angle, (a) => {
@@ -205,9 +240,12 @@ function ArcBadge({
 
   return (
     <div className="absolute inset-0" style={{ transform: `rotate(${base}deg)` }}>
-      <motion.span
+      <motion.button
+        type="button"
+        onClick={onClick}
+        aria-label={`Jump to step ${number}`}
         style={{ opacity }}
-        className="absolute left-1/2 top-[5px] grid size-11 sm:size-13 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white text-[17px] sm:text-[19px] font-medium text-[rgb(90_90_96)] shadow-[0_6px_16px_-10px_rgb(0_0_0/0.35)]"
+        className="pointer-events-auto cursor-pointer absolute left-1/2 top-[5px] grid size-11 sm:size-13 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-lg bg-white text-[17px] sm:text-[19px] font-medium text-[rgb(90_90_96)] shadow-[0_6px_16px_-10px_rgb(0_0_0/0.35)] transition-transform active:scale-95"
       >
         {number}
         <motion.span
@@ -216,7 +254,7 @@ function ArcBadge({
         >
           {number}
         </motion.span>
-      </motion.span>
+      </motion.button>
     </div>
   );
 }
