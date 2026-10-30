@@ -152,7 +152,7 @@ function CtaArc() {
       aria-hidden
     >
       <div className="relative aspect-square w-full">
-        {/* Outer concentric ring track */}
+        {/* Outer concentric ring track or first arc*/}
         <div className="absolute inset-0 rounded-full border border-midnight-18/60 bg-[#e9e8e5] p-2 sm:p-2.5 shadow-[0_0_50px_rgba(0,0,0,0.03)]">
           <div className="size-full rounded-full border border-white/90 bg-[#f4f3f0]" />
         </div>
