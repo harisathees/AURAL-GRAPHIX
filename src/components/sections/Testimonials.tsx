@@ -13,9 +13,15 @@ const avatarFor = (name: string) =>
     "Iniya": "/assets/avatar-default.webp",
   })[name] ?? "/assets/avatar-default.webp";
 
-export function Testimonials() {
+export function Testimonials({
+  className = "",
+  id = "testimonials",
+}: {
+  className?: string;
+  id?: string;
+} = {}) {
   return (
-    <section id="testimonials" className="section relative pt-5 sm:pt-10 lg:pt-[110px]">
+    <section id={id} className={`section relative pt-12 sm:pt-16 lg:pt-[110px] ${className}`}>
       <div className="container-x mx-auto max-w-[700px]">
         <div className="flex flex-col items-center gap-4 text-center">
           <Reveal delay={0.1}>

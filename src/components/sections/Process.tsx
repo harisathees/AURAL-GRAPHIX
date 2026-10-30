@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { PreTitle } from "@/components/ui/PreTitle";
 import { Reveal } from "@/components/ui/Reveal";
 import { processSteps } from "@/data/content";
+import { Testimonials } from "@/components/sections/Testimonials";
 
 /** Angle (deg) between two neighbouring step badges on the dial. */
 const GAP = 26;
@@ -81,8 +82,8 @@ export function Process() {
   return (
     <section id="process" className="section overflow-clip pb-0 pt-8 sm:pt-12 lg:pt-[110px]">
       <div className="container-x mx-auto max-w-[1200px]">
-        {/* Pinned scroll track calibrated for small screen tight spacing without excessive gap between Process & Testimonials */}
-        <div ref={trackRef} className="relative min-h-[500px] h-[66vh] sm:min-h-[640px] sm:h-[95vh] lg:min-h-[850px] lg:h-[150vh]">
+        {/* Pinned scroll track calibrated for constant spacing and reduced, smooth scroll speed for badges */}
+        <div ref={trackRef} className="relative min-h-[1600px] h-[220vh] sm:min-h-[1100px] sm:h-[220vh] lg:min-h-[1400px] lg:h-[260vh]">
           <div
             ref={stickyRef}
             onTouchStart={handleTouchStart}
@@ -166,6 +167,11 @@ export function Process() {
                 </p>
               </div>
             </Reveal>
+
+            {/* Mobile / small screen view: anchor Testimonials directly beneath Process with comfortable breathing room */}
+            <div className="w-full mt-28 sm:hidden">
+              <Testimonials className="!pt-0 !pb-0" id="testimonials" />
+            </div>
           </div>
         </div>
       </div>
@@ -174,7 +180,7 @@ export function Process() {
 }
 
 function Arc({ index, onSelect }: { index: number; onSelect?: (i: number) => void }) {
-  const rot = useSpring(0, { stiffness: 110, damping: 20, mass: 0.8 });
+  const rot = useSpring(0, { stiffness: 65, damping: 20, mass: 1 });
 
   useEffect(() => {
     rot.set(-index * GAP);

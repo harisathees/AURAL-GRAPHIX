@@ -5,15 +5,20 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/data/site";
+import { toolIcons } from "@/data/content";
+import { inView } from "@/lib/motion";
 
 /** The "Ready to start your next project?" banner shared across every page. */
 export function CtaBanner() {
   return (
-    <section className="section pt-16 lg:pt-24">
-      <div className="container-x mx-auto max-w-[1060px]">
+    <section className="section relative pt-16 lg:pt-24">
+      {/* Background animated concentric arc with orbiting tool glyphs */}
+      <CtaArc />
+
+      <div className="container-x relative z-2 mx-auto max-w-[1060px]">
         <Reveal className="shell">
           <div className="relative isolate overflow-hidden rounded-xl bg-gradient-to-r from-[rgb(238_233_250)] via-[rgb(198_175_244)] to-[rgb(134_82_231)] px-4 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-14">
-
+            <Rings />
 
             <div className="relative z-2 grid items-center gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
               <div className="flex flex-col items-start gap-4 sm:gap-5">
@@ -91,5 +96,112 @@ export function CtaBanner() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+/** Inner card decorative rings dipping into the CTA banner */
+function Rings() {
+  return (
+    <div className="hidden sm:block pointer-events-none absolute inset-0 z-1 overflow-hidden" aria-hidden>
+      <svg
+        className="size-full"
+        viewBox="0 0 1000 385"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        {/* Upper arc: dipping into upper-center of the banner */}
+        <motion.circle
+          cx="490"
+          cy="-110"
+          r="188"
+          stroke="#2e146d"
+          strokeWidth="6.5"
+          vectorEffect="non-scaling-stroke"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={inView}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+        />
+
+        {/* Lower arc: starting from bottom edge, passing behind the card to the bottom right */}
+        <motion.path
+          d="M 505 385 A 270 240 0 0 1 995 385"
+          stroke="#2e146d"
+          strokeWidth="7.5"
+          strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
+          initial={{ pathLength: 0, opacity: 0 }}
+          whileInView={{ pathLength: 1, opacity: 1 }}
+          viewport={inView}
+          transition={{ duration: 0.95, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+        />
+      </svg>
+    </div>
+  );
+}
+
+/** Concentric half-ring arch with orbiting tool glyph badges positioned behind the CTA banner section */
+function CtaArc() {
+  return (
+    <div
+      className="hidden sm:block pointer-events-none absolute left-1/2 -translate-x-1/2 -z-10 w-[160vw] max-w-none overflow-hidden top-[160px] sm:top-[175px] lg:top-[190px] h-[420px] sm:h-[490px] lg:h-[570px]"
+      style={{
+        maskImage: "linear-gradient(to bottom, black 0%, black 88%, rgba(0, 0, 0, 0.4) 100%)",
+        WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 88%, rgba(0, 0, 0, 0.4) 100%)",
+      }}
+      aria-hidden
+    >
+      <div className="relative aspect-square w-full">
+        {/* Outer concentric ring track */}
+        <div className="absolute inset-0 rounded-full border border-midnight-18/60 bg-[#e9e8e5] p-2 sm:p-2.5 shadow-[0_0_50px_rgba(0,0,0,0.03)]">
+          <div className="size-full rounded-full border border-white/90 bg-[#f4f3f0]" />
+        </div>
+
+        {/* Orbiting ring track of 16 tool glyphs */}
+        <div
+          className="absolute inset-0"
+          style={{ animation: "spin-slow 120s linear infinite" }}
+        >
+          {Array.from({ length: 16 }).map((_, i) => {
+            const angle = i * 22.5;
+            return (
+              <div
+                key={i}
+                className="absolute top-1/2 left-1/2 h-full w-[46px] sm:w-[56px] lg:w-[68px] pointer-events-none"
+                style={{ transform: `translate(-50%, -50%) rotate(${angle}deg)` }}
+              >
+                <div className="absolute left-0 top-0 w-full -translate-y-1/2">
+                  <CtaGlyph index={i} />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* 3rd arc */}
+       <div className="absolute inset-[3.5%] rounded-full border border-midnight-18/60 bg-[#e9e8e5] p-2 sm:p-2.5">
+        {/* 4th arc */}
+       <div className="size-full rounded-full border border-white/90 bg-[#f4f3f0]" />
+       </div>
+
+
+        
+      </div>
+    </div>
+  );
+}
+
+function CtaGlyph({ index }: { index: number }) {
+  const icon = toolIcons[index % toolIcons.length];
+  return (
+    <div className="grid size-[46px] sm:size-[56px] lg:size-[68px] place-items-center rounded-xl sm:rounded-2xl border border-white bg-white/95 shadow-[0_8px_22px_-14px_rgb(6_6_18/0.3)]">
+      <Image
+        src={icon.src}
+        alt={icon.label}
+        width={36}
+        height={36}
+        className="size-6 sm:size-7 lg:size-9 object-contain"
+      />
+    </div>
   );
 }
