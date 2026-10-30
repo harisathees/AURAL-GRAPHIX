@@ -31,7 +31,7 @@ export default function HomePage() {
       <Services />
       <FeaturedProjects />
       <Process />
-      <Testimonials />
+      <Testimonials className="hidden sm:block" id="testimonials-desktop" />
       <BlogPreview />
       <Faq />
       <CtaBanner />
