@@ -89,6 +89,12 @@ export const ServiceGlyph = ({ name, ...p }: P & { name: string }) => {
           <path d="M2 17l10 5 10-5" {...common} />
         </>
       )}
+      {(name === "security" || name === "shield") && (
+       <>
+         <path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6L12 3z" {...common} />
+         <path d="m9 12 2 2 4-4" {...common} />
+       </>
+      )} 
     </svg>
   );
 };
