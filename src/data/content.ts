@@ -36,6 +36,13 @@ export const services = [
     tags: ["SEO", "SMM", "SEM"],
     icon: "marketing",
   },
+  {
+    title: "Product Security Audit",
+    description:
+      "We test your app or website the way a hacker would, find vulnerabilities before attackers do, and deliver a clear report with prioritized fixes.",
+    tags: ["Security", "Pen Testing", "Compliance"],
+    icon: "security",
+  },
 ] as const;
 
 export const processSteps = [
