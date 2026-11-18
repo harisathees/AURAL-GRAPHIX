@@ -1,4 +1,4 @@
-# AURAL-GRAPHIX
+# AURAL-GRAPHIX  ---> https://auralgraphix.com/
 
 Next.js rebuild of the Aural Graphix creative-agency site — a 1:1 recreation of the
 original design in a modern, SEO-first React stack.
